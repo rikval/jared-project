@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {% endblock %}
+
+{% block body %}
+
+    {# TODO remplacer tour.name par tour quand toString() sera implémentée #}
+    <h1>Tournée {{ tour.name }}</h1>
+
+    {# TODO liste des dates de la tournée #}
+
+    <a href="{{ path('tour_delete', {'id': tour.id}) }}"
+       class="btn btn-danger">
+        Supprimer
+    </a>
+
+{% endblock %}

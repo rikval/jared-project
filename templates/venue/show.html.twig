@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {% endblock %}
+
+{% block body %}
+
+    {# TODO remplacer venue.name par tour quand toString() sera implémentée #}
+    <h1>{{ venue.name }}</h1>
+
+
+    <a href="{{ path('venue_delete', {'id': venue.id}) }}"
+       class="btn btn-danger">
+        Supprimer
+    </a>
+
+{% endblock %}

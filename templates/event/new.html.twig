@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une date</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.dateEvent) }}
+    {{ form_row(form.startHour) }}
+    {{ form_row(form.endHour) }}
+    {{ form_row(form.arrivalHour) }}
+    {{ form_row(form.allowance) }}
+    {{ form_row(form.currency) }}
+    {{ form_row(form.hasAccommodation) }}
+    {{ form_row(form.isPublic) }}
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+            Enregistrer
+        </button>
+    </div>
+    {{  form_end(form) }}
+{% endblock %}

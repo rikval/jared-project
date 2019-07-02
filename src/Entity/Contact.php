@@ -53,9 +53,15 @@ class Contact
      */
     private $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="contact")
+     */
+    private $relations;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->relations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +162,37 @@ class Contact
     {
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Relation[]
+     */
+    public function getRelations(): Collection
+    {
+        return $this->relations;
+    }
+
+    public function addRelation(Relation $relation): self
+    {
+        if (!$this->relations->contains($relation)) {
+            $this->relations[] = $relation;
+            $relation->setContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelation(Relation $relation): self
+    {
+        if ($this->relations->contains($relation)) {
+            $this->relations->removeElement($relation);
+            // set the owning side to null (unless already changed)
+            if ($relation->getContact() === $this) {
+                $relation->setContact(null);
+            }
         }
 
         return $this;

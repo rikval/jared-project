@@ -51,6 +51,8 @@ class Location
      */
     private $zip;
 
+    //TODO : Venue relation
+
     public function getId(): ?int
     {
         return $this->id;

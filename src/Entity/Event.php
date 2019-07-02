@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,6 +62,16 @@ class Event
      * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event")
      */
     private $venue;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Contact", mappedBy="events")
+     */
+    private $contacts;
+
+    public function __construct()
+    {
+        $this->contacts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -170,6 +182,34 @@ class Event
     public function setVenue(?Venue $venue): self
     {
         $this->venue = $venue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->contains($contact)) {
+            $this->contacts->removeElement($contact);
+            $contact->removeEvent($this);
+        }
 
         return $this;
     }

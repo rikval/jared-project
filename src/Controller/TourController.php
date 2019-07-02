@@ -108,10 +108,11 @@ class TourController extends AbstractController
      *
      * @Route("/delete/{id}", name="tour_delete", methods={"GET"})
      */
-    public function delete(EntityManagerInterface $em, Tour $tour)
+    public function delete(Tour $tour)
     {
-        $em->remove($tour);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($tour);
+        $entityManager->flush();
 
         //TODO ajouter un message de confirmation de suppression
         return $this->redirectToRoute('tour_index');

@@ -108,10 +108,11 @@ class VenueController extends AbstractController
      *
      * @Route("/delete/{id}", name="venue_delete", methods={"GET"})
      */
-    public function delete(EntityManagerInterface $em, Venue $venue)
+    public function delete(Venue $venue)
     {
-        $em->remove($venue);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($venue);
+        $entityManager->flush();
 
         //TODO ajouter un message de confirmation de suppression
         return $this->redirectToRoute('venue_index');

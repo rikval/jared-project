@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Tour;
-use App\Form\TourType;
+use App\Entity\Artist;
+use App\Form\ArtistType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,34 +13,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * Class TourController
+ * Class ArtistController
  * @package App\Controller
- * @Route("/tour")
+ * @Route("/artist")
  *
  * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
  */
-class TourController extends AbstractController
+class ArtistController extends AbstractController
 {
     /**
-     * @Route("/", name="tour_index")
+     * @Route("/", name="artist_index")
      */
     public function index()
     {
-        return $this->render('tour/index.html.twig', [
-            'controller_name' => 'TourController',
+        return $this->render('artist/index.html.twig', [
+            'controller_name' => 'ArtistController',
         ]);
     }
 
     /**
-     * @param Tour $tour
+     * @param Artist $artist
      * @return Response
      *
-     * @Route("/show/{id}", name="tour_show", methods={"GET"})
+     * @Route("/show/{id}", name="artist_show", methods={"GET"})
      */
-    public function show(Tour $tour): Response
+    public function show(Artist $artist): Response
     {
-        return $this->render('tour/show.html.twig', [
-            'tour' => $tour
+        return $this->render('artist/show.html.twig', [
+            'artist' => $artist
         ]);
     }
 
@@ -47,41 +48,42 @@ class TourController extends AbstractController
      * @param Request $request
      * @return Response
      *
-     * @Route("/new", name="tour_new", methods={"GET", "POST"})
+     * @Route("/new", name="artist_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
-        $tour = new Tour();
-        $form = $this->createForm(TourType::class, $tour);
+        $artist = new Artist();
+        $form = $this->createForm(ArtistType::class, $artist);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
             if($form->isValid()){
+
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($tour);
+                $entityManager->persist($artist);
                 $entityManager->flush();
 
                 // TODO ajouter un message de validation de création de formulaire
-                return $this->redirectToRoute('tour_index');
+                return $this->redirectToRoute('artist_index');
             }
             //TODO ajouter un message d'erreur de formulaire non valide
         }
-        return $this->render('tour/new.html.twig', [
-            'tour' => $tour,
+        return $this->render('artist/new.html.twig', [
+            'artist' => $artist,
             'form' => $form->createView(),
         ]);
     }
 
     /**
      * @param Request $request
-     * @param Tour $tour
+     * @param Artist $artist
      * @return Response
      *
-     * @Route("/edit/{id}/", name="tour_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}/", name="artist_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Tour $tour): Response
+    public function edit(Request $request, Artist $artist): Response
     {
-        $form = $this->createForm(TourType::class, $tour);
+        $form = $this->createForm(ArtistType::class, $artist);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
@@ -89,32 +91,32 @@ class TourController extends AbstractController
                 $this->getDoctrine()->getManager()->flush();
 
                 //TODO ajouter un message de validation d'edition
-                return $this->redirectToRoute('tour_show', [
-                    'id' => $tour->getId()
+                return $this->redirectToRoute('artist_show', [
+                    'id' => $artist->getId()
                 ]);
             }
             //TODO ajouter un message d'erreur de formulaire non valide
         }
-        return $this->render('tour/edit.html.twig', [
-            'tour' => $tour,
+        return $this->render('artist/edit.html.twig', [
+            'artist' => $artist,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @param EntityManagerInterface $em
-     * @param Tour $tour
+     *
+     * @param Artist $artist
      * @return Response
      *
-     * @Route("/delete/{id}", name="tour_delete", methods={"GET"})
+     * @Route("/delete/{id}", name="artist_delete", methods={"GET"})
      */
-    public function delete(Tour $tour)
+    public function delete(Artist $artist)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tour);
+        $entityManager->remove($artist);
         $entityManager->flush();
 
         //TODO ajouter un message de confirmation de suppression
-        return $this->redirectToRoute('tour_index');
+        return $this->redirectToRoute('artist_index');
     }
 }

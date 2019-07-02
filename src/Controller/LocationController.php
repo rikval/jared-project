@@ -2,44 +2,41 @@
 
 namespace App\Controller;
 
-use App\Entity\Tour;
-use App\Form\TourType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Location;
+use App\Form\LocationType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
- * Class TourController
+ * Class LocationController
  * @package App\Controller
- * @Route("/tour")
- *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
+ * @Route("/location")
  */
-class TourController extends AbstractController
+class LocationController extends AbstractController
 {
     /**
-     * @Route("/", name="tour_index")
+     * @Route("/", name="location_index")
      */
     public function index()
     {
-        return $this->render('tour/index.html.twig', [
-            'controller_name' => 'TourController',
+        return $this->render('location/index.html.twig', [
+            'controller_name' => 'LocationController',
         ]);
     }
 
     /**
-     * @param Tour $tour
+     * @param Location $location
      * @return Response
      *
-     * @Route("/show/{id}", name="tour_show", methods={"GET"})
+     * @Route("/show/{id}", name="location_show", methods={"GET"})
      */
-    public function show(Tour $tour): Response
+    public function show(Location $location): Response
     {
-        return $this->render('tour/show.html.twig', [
-            'tour' => $tour
+        return $this->render('location/show.html.twig', [
+            'location' => $location
         ]);
     }
 
@@ -47,41 +44,42 @@ class TourController extends AbstractController
      * @param Request $request
      * @return Response
      *
-     * @Route("/new", name="tour_new", methods={"GET", "POST"})
+     * @Route("/new", name="location_new", methods={"GET", "POST"})
      */
     public function new(Request $request): Response
     {
-        $tour = new Tour();
-        $form = $this->createForm(TourType::class, $tour);
+        $location = new Location();
+        $form = $this->createForm(LocationType::class, $location);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
             if($form->isValid()){
+
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($tour);
+                $entityManager->persist($location);
                 $entityManager->flush();
 
                 // TODO ajouter un message de validation de création de formulaire
-                return $this->redirectToRoute('tour_index');
+                return $this->redirectToRoute('location_index');
             }
             //TODO ajouter un message d'erreur de formulaire non valide
         }
-        return $this->render('tour/new.html.twig', [
-            'tour' => $tour,
+        return $this->render('location/new.html.twig', [
+            'location' => $location,
             'form' => $form->createView(),
         ]);
     }
 
     /**
      * @param Request $request
-     * @param Tour $tour
+     * @param Location $location
      * @return Response
      *
-     * @Route("/edit/{id}/", name="tour_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}/", name="location_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Tour $tour): Response
+    public function edit(Request $request, Location $location): Response
     {
-        $form = $this->createForm(TourType::class, $tour);
+        $form = $this->createForm(LocationType::class, $location);
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
@@ -89,32 +87,31 @@ class TourController extends AbstractController
                 $this->getDoctrine()->getManager()->flush();
 
                 //TODO ajouter un message de validation d'edition
-                return $this->redirectToRoute('tour_show', [
-                    'id' => $tour->getId()
+                return $this->redirectToRoute('location_show', [
+                    'id' => $location->getId()
                 ]);
             }
             //TODO ajouter un message d'erreur de formulaire non valide
         }
-        return $this->render('tour/edit.html.twig', [
-            'tour' => $tour,
+        return $this->render('location/edit.html.twig', [
+            'location' => $location,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @param EntityManagerInterface $em
-     * @param Tour $tour
+     * @param Location $location
      * @return Response
      *
-     * @Route("/delete/{id}", name="tour_delete", methods={"GET"})
+     * @Route("/delete/{id}", name="location_delete", methods={"GET"})
      */
-    public function delete(Tour $tour)
+    public function delete(Location $location)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tour);
+        $entityManager->remove($location);
         $entityManager->flush();
 
         //TODO ajouter un message de confirmation de suppression
-        return $this->redirectToRoute('tour_index');
+        return $this->redirectToRoute('location_index');
     }
 }

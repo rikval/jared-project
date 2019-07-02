@@ -109,10 +109,11 @@ class EventController extends AbstractController
      *
      * @Route("/delete/{id}", name="event_delete", methods={"GET"})
      */
-    public function delete(EntityManagerInterface $em, Event $event)
+    public function delete(Event $event)
     {
-        $em->remove($event);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($event);
+        $entityManager->flush();
 
         //TODO ajouter un message de confirmation de suppression
         return $this->redirectToRoute('event_index');

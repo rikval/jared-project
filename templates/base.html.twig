@@ -26,16 +26,34 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item active  ">
+                    <li class="nav-item active">
                         <a class="nav-link" href="javascript:void(0)">
                             <i class="material-icons">dashboard</i>
                             <p>Tableau de bord</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="javascript:void(0)">
-                            <i class="material-icons">person</i>
-                            <p>User Profile</p>
+                        <a class="nav-link" href="{{ path('tour_index') }}">
+                            <i class="material-icons">map</i>
+                            <p>Tour</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('venue_index') }}">
+                            <i class="material-icons">local_activity</i>
+                            <p>Venue</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('event_index') }}">
+                            <i class="material-icons">event</i>
+                            <p>Event</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('location_index') }}">
+                            <i class="material-icons">location_on</i>
+                            <p>Location</p>
                         </a>
                     </li>
                     <!-- your sidebar here -->
@@ -47,7 +65,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:void(0)">Tableau de bord</a>
+                        <a class="navbar-brand" href="javascript:void(0)">Jared Project</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
@@ -70,9 +88,21 @@
                     </div>
                 </div>
             </nav>
+
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">
+                    <!-- Flash message -->
+                    {% for type, messages in app.session.flashBag.all %}
+                        {% for message in messages %}
+                            {% if type == 'error' %}
+                                {% set type = 'danger' %}
+                            {% endif %}
+                            <div class="alert alert-{{ type }} mt-2">
+                                {{ message|raw }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     <!-- your content here -->
                     {% block body %}{% endblock %}
                 </div>

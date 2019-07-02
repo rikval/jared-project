@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - {% endblock %}
+
+{% block body %}
+
+
+    <h1>{{ artist.name }}</h1>
+
+    {# TODO liste des dates à venir #}
+
+    {# TODO liste des dates passées #}
+
+    <a href="{{ path('artist_delete', {'id': artist.id}) }}"
+       class="btn btn-danger">
+        delete
+    </a>
+
+{% endblock %}

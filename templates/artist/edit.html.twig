@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>edit {{ artist.name }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+            edit
+        </button>
+    </div>
+    {{  form_end(form) }}
+{% endblock %}

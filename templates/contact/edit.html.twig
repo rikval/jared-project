@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Add a contact</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.phone) }}
+    {{ form_row(form.website) }}
+    {{ form_row(form.language) }}
+    {{ form_row(form.note) }}
+
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+            add
+        </button>
+    </div>
+    {{  form_end(form) }}
+{% endblock %}

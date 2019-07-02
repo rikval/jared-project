@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,21 @@ class Venue
      * @ORM\Column(type="text", nullable=true)
      */
     private $note;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="venue")
+     */
+    private $event;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Location", cascade={"persist", "remove"})
+     */
+    private $location;
+
+    public function __construct()
+    {
+        $this->event = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +85,49 @@ class Venue
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvent(): Collection
+    {
+        return $this->event;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->event->contains($event)) {
+            $this->event[] = $event;
+            $event->setVenue($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->event->contains($event)) {
+            $this->event->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getVenue() === $this) {
+                $event->setVenue(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

@@ -56,6 +56,11 @@ class Event
      */
     private $isPublic;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event")
+     */
+    private $venue;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +158,18 @@ class Event
     public function setIsPublic(bool $isPublic): self
     {
         $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    public function getVenue(): ?Venue
+    {
+        return $this->venue;
+    }
+
+    public function setVenue(?Venue $venue): self
+    {
+        $this->venue = $venue;
 
         return $this;
     }

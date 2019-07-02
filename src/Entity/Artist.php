@@ -21,6 +21,11 @@ class Artist
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="artist")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class Artist
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

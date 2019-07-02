@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Location;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,9 +34,8 @@ class LocationType extends AbstractType
                     'label' => 'Ville'
                 ]
             )
-            //TODO : CountryType ??
             ->add('country',
-                TextType::class,
+                CountryType::class,
                 [
                     'label' => 'Pays'
                 ]

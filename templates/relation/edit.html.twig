@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>add a relation</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.affinity) }}
+    {{ form_row(form.artist) }}
+    {{ form_row(form.contact) }}
+
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+            add
+        </button>
+    </div>
+    {{  form_end(form) }}
+{% endblock %}

@@ -51,7 +51,10 @@ class Location
      */
     private $zip;
 
-    //TODO : Venue relation
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Venue", cascade={"persist", "remove"})
+     */
+    private $venue;
 
     public function getId(): ?int
     {
@@ -138,6 +141,18 @@ class Location
     public function setZip(?string $zip): self
     {
         $this->zip = $zip;
+
+        return $this;
+    }
+
+    public function getVenue(): ?Venue
+    {
+        return $this->venue;
+    }
+
+    public function setVenue(?Venue $venue): self
+    {
+        $this->venue = $venue;
 
         return $this;
     }

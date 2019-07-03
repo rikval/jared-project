@@ -57,9 +57,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('security_register') }}">
+                        {#TODO Cacher le lien si non loggé#}
+                        <a class="nav-link"
+{#                           href="{{ path('user_show', {'id': app.user.id})#}
+                           href="{{ path('user_index')
+                           }}">
                             <i class="material-icons">person</i>
-                            <p>User</p>
+                            <p>User Profile</p>
                         </a>
                     </li>
                     <!-- your sidebar here -->

@@ -53,6 +53,12 @@ class Contact
      */
     private $events;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="contact")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -157,6 +163,18 @@ class Contact
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

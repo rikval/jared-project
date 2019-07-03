@@ -54,9 +54,15 @@ class User implements UserInterface
      */
     private $tour;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contact", mappedBy="user", orphanRemoval=true)
+     */
+    private $contact;
+
     public function __construct()
     {
         $this->artist = new ArrayCollection();
+        $this->contact = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,5 +229,36 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContact(): Collection
+    {
+        return $this->contact;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contact->contains($contact)) {
+            $this->contact[] = $contact;
+            $contact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contact->contains($contact)) {
+            $this->contact->removeElement($contact);
+            // set the owning side to null (unless already changed)
+            if ($contact->getUser() === $this) {
+                $contact->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

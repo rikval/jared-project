@@ -21,7 +21,7 @@ class RelationType extends AbstractType
                 'choices' => [
                     "Like" => "like",
                     "Doesn't like" => 'unlike'
-                ]
+                ],
             ])
             ->add('note', TextareaType::class, [
                 'label' => "Note",

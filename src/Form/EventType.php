@@ -20,40 +20,47 @@ class EventType extends AbstractType
     {
         $builder
             ->add('dateEvent', DateType::class, [
-                'label' => 'Date du concert',
+                'label' => 'date',
                 'format' => 'dd-MM-yyyy',
-                'widget' => 'choice'
+                'widget' => 'choice',
+                'required' => true
             ])
             ->add('startHour', TimeType::class, [
-                'label' => 'Heure de début',
-                'widget' => 'choice'
+                'label' => 'start time',
+                'widget' => 'choice',
+                'required' => false
             ])
             ->add('endHour', TimeType::class, [
-                'label' => "Heure de fin",
-                'widget' => 'choice'
+                'label' => "end Time",
+                'widget' => 'choice',
+                'required' => false
             ])
             ->add('arrivalHour', TimeType::class, [
-                'label' => "Heure d'arrivée",
-                'widget' => 'choice'
+                'label' => "arrival time",
+                'widget' => 'choice',
+                'required' => false
             ])
             ->add('allowance', IntegerType::class, [
-                'label' => "Cachet"
+                'label' => "allowance",
+                'required' => false
             ])
             ->add('currency', TextType::class, [
-                'label' => "Devise"
+                'label' => "currency",
+                'required' => false
             ])
             ->add('hasAccommodation', CheckboxType::class, [
-                'label' => "Hébergement prévu ?",
+                'label' => "is there any accommodation ",
                 'required' => false
             ])
             ->add('isPublic', CheckboxType::class, [
-                'label' => "Voulez-vous rendre cette événement public ?",
+                'label' => "do you want to give a public visibility to this event  ?",
                 'required' => false
             ])
             ->add('venue', EntityType::class, [
                 'class' => Venue::class,
-                'label' => "Venue",
-                'choice_label' => "name"
+                'label' => "venue",
+                'choice_label' => "name",
+                'required' => false
             ])
         ;
     }

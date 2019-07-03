@@ -16,13 +16,16 @@ class VenueType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom du lieu"
+                'label' => "Venue's name",
+                'required' => true
             ])
             ->add('audienceCapacity', IntegerType::class, [
-                'label' => "Capacité"
+                'label' => "audience capacity",
+                'required' => false
             ])
             ->add('note', TextareaType::class, [
-                'label' => "Note"
+                'label' => "note",
+                'required' => false
             ])
         ;
     }

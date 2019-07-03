@@ -15,15 +15,19 @@ class TourType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                    'label' => 'Tour name'
-                ])
+                'label' => 'tour name',
+                'required' => true
+            ])
             ->add('startDate', DateType::class, [
-                'widget' => 'choice'
+                'label' => "begin date",
+                'widget' => 'choice',
+                'required' => true
             ])
             ->add('endDate', DateType::class, [
-                'widget' => "choice"
-            ])
-        ;
+                'label' => "end date",
+                'widget' => "choice",
+                'required' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

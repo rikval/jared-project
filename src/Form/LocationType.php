@@ -16,50 +16,41 @@ class LocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('streetNumber',
-                IntegerType::class,
-                [
-                    'label' => 'N°'
+            ->add('streetNumber', IntegerType::class, [
+                    'label' => 'n°',
+                    'required' => false
                 ]
             )
-            ->add('streetName',
-                TextType::class,
-                [
-                    'label' => 'Rue'
+            ->add('streetName', TextType::class, [
+                    'label' => 'street',
+                    'required' => false
                 ]
             )
-            ->add('city',
-                TextType::class,
-                [
-                    'label' => 'Ville'
+            ->add('city', TextType::class, [
+                    'label' => 'city',
+                    'required' => false
                 ]
             )
-            ->add('country',
-                CountryType::class,
-                [
-                    'label' => 'Pays'
+            ->add('country', CountryType::class, [
+                    'label' => 'country',
+                    'required'=> false
                 ]
             )
-            ->add('longitude',
-                NumberType::class,
-                [
-                    'label' => 'Longitude'
+            ->add('longitude', NumberType::class, [
+                    'label' => 'longitude',
+                    'required' => false
                 ]
             )
-            ->add('latitude',
-                NumberType::class,
-                [
-                    'label' => 'Latitude'
+            ->add('latitude', NumberType::class, [
+                    'label' => 'latitude',
+                    'required' => false
                 ]
             )
-            ->add('zip',
-                TextType::class,
-                [
-                    'label' => 'ZIP'
+            ->add('zip', TextType::class, [
+                    'label' => 'ZIP',
+                    'required' => false
                 ]
             )
-
-            //TODO : Venue
         ;
     }
 

@@ -68,10 +68,16 @@ class User implements UserInterface
      */
     private $contact;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Permission", mappedBy="user", orphanRemoval=true)
+     */
+    private $permissions;
+
     public function __construct()
     {
         $this->artist = new ArrayCollection();
         $this->contact = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -265,6 +271,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($contact->getUser() === $this) {
                 $contact->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+            $permission->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+            // set the owning side to null (unless already changed)
+            if ($permission->getUser() === $this) {
+                $permission->setUser(null);
             }
         }
 

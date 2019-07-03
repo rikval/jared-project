@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use App\Entity\Venue;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -47,6 +49,11 @@ class EventType extends AbstractType
             ->add('isPublic', CheckboxType::class, [
                 'label' => "Voulez-vous rendre cette événement public ?",
                 'required' => false
+            ])
+            ->add('venue', EntityType::class, [
+                'class' => Venue::class,
+                'label' => "Venue",
+                'choice_label' => "name"
             ])
         ;
     }

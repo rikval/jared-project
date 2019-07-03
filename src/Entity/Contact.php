@@ -54,6 +54,12 @@ class Contact
     private $events;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="contact")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="contact")
      */
     private $relations;
@@ -163,6 +169,18 @@ class Contact
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

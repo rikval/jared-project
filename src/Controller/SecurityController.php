@@ -39,12 +39,12 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Votre compte a été crée');
+                $this->addFlash('success', 'Your account has been created !');
 
                 return $this->redirectToRoute('app_index_index');
 
             } else {
-                $this->addFlash('error', 'Le formulaire contient des erreurs');
+                $this->addFlash('error', 'The form contains errors');
             }
         }
 

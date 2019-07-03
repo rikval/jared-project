@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>add a permission</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.permission) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.tour) }}
+
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">
+            add
+        </button>
+    </div>
+    {{  form_end(form) }}
+{% endblock %}

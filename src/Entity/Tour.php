@@ -38,9 +38,15 @@ class Tour
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Permission", mappedBy="tour", orphanRemoval=true)
+     */
+    private $permissions;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +115,37 @@ class Tour
             // set the owning side to null (unless already changed)
             if ($user->getTour() === $this) {
                 $user->setTour(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Permission[]
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions[] = $permission;
+            $permission->setTour($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->contains($permission)) {
+            $this->permissions->removeElement($permission);
+            // set the owning side to null (unless already changed)
+            if ($permission->getTour() === $this) {
+                $permission->setTour(null);
             }
         }
 

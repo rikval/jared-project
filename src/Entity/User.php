@@ -5,10 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="This email is already in use.")
  */
 class User implements UserInterface
 {
@@ -21,11 +24,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Please choose your nickname.")
+     * @Assert\Length(max="50", maxMessage="Your nickname can be at most {{ limit }} characters.")
      */
     private $nickname;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Please enter a valid email.")
+     * @Assert\Email(message="That email address doesn’t look right.")
      */
     private $email;
 
@@ -36,6 +43,8 @@ class User implements UserInterface
 
     /**
      * @var string
+     * @Assert\NotBlank(message="Please enter your password.")
+     * @Assert\Length(min="6", minMessage="Your password must be at least {{ limit }} characters.")
      */
     private  $plainPassword;
 

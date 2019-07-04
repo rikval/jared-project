@@ -25,7 +25,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="Please choose your nickname.")
-     * @Assert\Length(max="50", maxMessage="Your nickname can be at most {{ limit }} characters.")
+     * @Assert\Length(max="50", maxMessage="Your nickname must be at most {{ limit }} characters.")
      */
     private $nickname;
 

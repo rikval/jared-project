@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VenueRepository")
@@ -20,6 +21,8 @@ class Venue
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank(message="You must give a name to your venue")
+     * @Assert\Length(maxMessage="60", maxMessage="Venue's name msut be at most {{ limit }} characters")
      */
     private $name;
 

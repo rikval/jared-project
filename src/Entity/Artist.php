@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArtistRepository")
@@ -20,6 +21,8 @@ class Artist
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="You must give a name to your artist")
+     * @Assert\Length(max="50", maxMessage="The name of an artist must be at most {{ limit }} characters")
      */
     private $name;
 

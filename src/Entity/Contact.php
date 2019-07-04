@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
@@ -20,26 +21,32 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank(message="You must give a name to your contact")
+     * @Assert\Length(max="60", maxMessage="The contact's name must be at most {{ limit }} characters.")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(max="100", maxMessage="Email must be at most {{ limit }} characters")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(max="50", maxMessage="Phone number must be at most {{ limit }} characters")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Length(max="100", maxMessage="Website must be at most {{ limit }} characters")
      */
     private $website;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Length(max="15", maxMessage="Language must be at most {{ limit }} characters")
      */
     private $language;
 

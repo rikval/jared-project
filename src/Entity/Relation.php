@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationRepository")
@@ -19,17 +20,20 @@ class Relation
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="relations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="You must chose an artist to build a relation")
      */
     private $artist;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Contact", inversedBy="relations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="You must chose a contact to build a relation")
      */
     private $contact;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="You must characterize the relation to build it")
      */
     private $affinity;
 

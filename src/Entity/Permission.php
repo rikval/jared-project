@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PermissionRepository")
@@ -18,18 +19,21 @@ class Permission
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank(message="Wich level of permission do you want to give ?")
      */
     private $permission;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="permissions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="You must specify which user you want to give this permission")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="permissions")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="You must chose a tour")
      */
     private $tour;
 

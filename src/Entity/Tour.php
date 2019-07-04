@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TourRepository")
@@ -20,6 +21,8 @@ class Tour
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="You must give a name to your tour")
+     * @Assert\Length(max="50", maxMessage="Tour's name must be at most {{ limit }} characters")
      */
     private $name;
 

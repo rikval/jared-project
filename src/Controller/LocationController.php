@@ -58,10 +58,10 @@ class LocationController extends AbstractController
                 $entityManager->persist($location);
                 $entityManager->flush();
 
-                // TODO ajouter un message de validation de création de formulaire
+                $this->addFlash('success', 'Location has been created !');
                 return $this->redirectToRoute('location_index');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('location/new.html.twig', [
             'location' => $location,

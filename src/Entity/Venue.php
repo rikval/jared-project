@@ -22,7 +22,7 @@ class Venue
     /**
      * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank(message="You must give a name to your venue")
-     * @Assert\Length(maxMessage="60", maxMessage="Venue's name msut be at most {{ limit }} characters")
+     * @Assert\Length(max="60", maxMessage="Venue's name msut be at most {{ limit }} characters")
      */
     private $name;
 

@@ -6,6 +6,8 @@ use App\Entity\Contact;
 use App\Entity\Event;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -39,6 +41,19 @@ class ContactType extends AbstractType
             ])
             ->add('language', LanguageType::class, [
                 'label' => "Language",
+                'required' => false
+            ])
+            ->add('reach', ChoiceType::class, [
+                'label' => "Reach",
+                'choices' => [
+                    'National' => 'national',
+                    'Regional' => 'regional',
+                    'Local' =>  'local'
+                ],
+                'required' => false
+            ])
+            ->add('area', CountryType::class, [
+                'label' => "Country",
                 'required' => false
             ])
             ->add('note', TextareaType::class, [

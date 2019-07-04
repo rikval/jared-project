@@ -55,17 +55,19 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
+        $contact->setUser($this->getUser());
+
         if($form->isSubmitted()){
             if($form->isValid()){
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($contact);
                 $entityManager->flush();
-
-                // TODO ajouter un message de validation de création de formulaire
+                
+                $this->addFlash('success', 'Contact has been created !');
                 return $this->redirectToRoute('contact_index');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('contact/new.html.twig', [
             'contact' => $contact,

@@ -71,6 +71,16 @@ class Contact
      */
     private $relations;
 
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $reach;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $area;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -219,6 +229,30 @@ class Contact
                 $relation->setContact(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReach(): ?string
+    {
+        return $this->reach;
+    }
+
+    public function setReach(?string $reach): self
+    {
+        $this->reach = $reach;
+
+        return $this;
+    }
+
+    public function getArea(): ?string
+    {
+        return $this->area;
+    }
+
+    public function setArea(?string $area): self
+    {
+        $this->area = $area;
 
         return $this;
     }

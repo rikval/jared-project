@@ -36,9 +36,15 @@ class Artist
      */
     private $relations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tour", mappedBy="artist", orphanRemoval=true)
+     */
+    private $tours;
+
     public function __construct()
     {
         $this->relations = new ArrayCollection();
+        $this->tours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +101,37 @@ class Artist
             // set the owning side to null (unless already changed)
             if ($relation->getArtist() === $this) {
                 $relation->setArtist(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tour[]
+     */
+    public function getTours(): Collection
+    {
+        return $this->tours;
+    }
+
+    public function addTour(Tour $tour): self
+    {
+        if (!$this->tours->contains($tour)) {
+            $this->tours[] = $tour;
+            $tour->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTour(Tour $tour): self
+    {
+        if ($this->tours->contains($tour)) {
+            $this->tours->removeElement($tour);
+            // set the owning side to null (unless already changed)
+            if ($tour->getArtist() === $this) {
+                $tour->setArtist(null);
             }
         }
 

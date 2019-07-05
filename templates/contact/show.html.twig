@@ -6,6 +6,58 @@
 
     <h1>{{ contact.name }}</h1>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Language</th>
+            <th>Note</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="{{ path('contact_show', {"id" : contact.id}) }}">{{ contact.name }}</a></td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.website }}</td>
+                <td>{{ contact.language }}</td>
+                <td>{{ contact.note }}</td>
+                <td><a class="btn-info" href="{{ path('contact_edit', {"id" : contact.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : contact.id}) }}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Allowance</th>
+            <th>Accommodation</th>
+            <th>Is public</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in contact.events %}
+            <tr>
+                <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.dateEvent | date('m-d-Y') }}</a></td>
+                <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
+                <td>{{ event.allowance }} {{ event.currency }}</td>
+                <td>{{ event.hasAccommodation }}</td>
+                <td>{{ event.isPublic }}</td>
+                <td><a class="btn-info" href="{{ path('contact_edit', {"id" : event.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : event.id}) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
     <a href="{{ path('contact_delete', {'id': contact.id}) }}"
        class="btn btn-danger">
         delete

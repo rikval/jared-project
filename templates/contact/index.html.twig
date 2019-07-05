@@ -9,4 +9,32 @@
        class="btn btn-edit">
         add
     </a>
+
+    <table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Website</th>
+        <th>Language</th>
+        <th>Note</th>
+        <th colspan="2">Options</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+        <tr>
+            <td><a href="{{ path('contact_show', {"id" : contact.id}) }}">{{ contact.name }}</a></td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.phone }}</td>
+            <td>{{ contact.website }}</td>
+            <td>{{ contact.language }}</td>
+            <td>{{ contact.note }}</td>
+            <td><a class="btn-info" href="{{ path('contact_edit', {"id" : contact.id}) }}">Edit</a></td>
+            <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : contact.id}) }}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

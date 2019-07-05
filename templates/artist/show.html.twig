@@ -7,6 +7,35 @@
 
     <h1>{{ artist.name }}</h1>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Allowance</th>
+            <th>Accommodation</th>
+            <th>Is public</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tour in artist.tours %}
+            {% for event in tour.events %}
+            <tr>
+                <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.dateEvent | date('m-d-Y') }}</a></td>
+                <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
+                <td>{{ event.allowance }} {{ event.currency }}</td>
+                <td>{{ event.hasAccommodation }}</td>
+                <td>{{ event.isPublic }}</td>
+                <td><a class="btn-info" href="{{ path('contact_edit', {"id" : event.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : event.id}) }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
     {# TODO liste des dates à venir #}
 
     {# TODO liste des dates passées #}

@@ -9,4 +9,22 @@
        class="btn btn-edit">
         add
     </a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th colspan="2">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tour in tours %}
+            <tr>
+                <td><a href="{{ path('tour_show', {"id" : tour.id}) }}">{{ tour.name }}</a></td>
+                <td><a class="btn-info" href="{{ path('tour_edit', {"id" : tour.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('tour_delete', {"id" : tour.id}) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

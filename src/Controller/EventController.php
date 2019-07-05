@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
+use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,11 @@ class EventController extends AbstractController
     /**
      * @Route("/", name="event_index")
      */
-    public function index()
+    public function index(EventRepository $repo)
     {
+        $events = $repo->findAll();
         return $this->render('event/index.html.twig', [
-            'controller_name' => 'EventController',
+            'events' => $events,
         ]);
     }
 

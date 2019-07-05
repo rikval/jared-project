@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tour;
 use App\Form\TourType;
+use App\Repository\TourRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,11 @@ class TourController extends AbstractController
     /**
      * @Route("/", name="tour_index")
      */
-    public function index()
+    public function index(TourRepository $repo)
     {
+        $tours = $repo->findAll();
         return $this->render('tour/index.html.twig', [
-            'controller_name' => 'TourController',
+            'tours' => $tours,
         ]);
     }
 

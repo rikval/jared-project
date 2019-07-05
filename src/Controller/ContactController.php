@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,11 @@ class ContactController extends AbstractController
     /**
      * @Route("/", name="contact_index")
      */
-    public function index()
+    public function index(ContactRepository $repo)
     {
+        $contacts = $repo->findAll();
         return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
+            'contacts' => $contacts,
         ]);
     }
 

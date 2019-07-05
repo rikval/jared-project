@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Artist;
 use App\Form\ArtistType;
+use App\Repository\ArtistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +23,11 @@ class ArtistController extends AbstractController
     /**
      * @Route("/", name="artist_index")
      */
-    public function index()
+    public function index(ArtistRepository $repo)
     {
+        $artists = $repo->findAll();
         return $this->render('artist/index.html.twig', [
-            'controller_name' => 'ArtistController',
+            'artists' => $artists,
         ]);
     }
 

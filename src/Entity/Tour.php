@@ -46,10 +46,22 @@ class Tour
      */
     private $permissions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tours")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $artist;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="tour", orphanRemoval=true)
+     */
+    private $events;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,6 +164,48 @@ class Tour
             }
         }
 
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setTour($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getTour() === $this) {
+                $event->setTour(null);
+            }
+        }
         return $this;
     }
 }

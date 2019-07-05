@@ -70,6 +70,11 @@ class Event
      */
     private $contacts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="shows")
+     */
+    private $tour;
+
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
@@ -212,6 +217,18 @@ class Event
             $this->contacts->removeElement($contact);
             $contact->removeEvent($this);
         }
+
+        return $this;
+    }
+
+    public function getTour(): ?Tour
+    {
+        return $this->tour;
+    }
+
+    public function setTour(?Tour $tour): self
+    {
+        $this->tour = $tour;
 
         return $this;
     }

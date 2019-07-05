@@ -4,10 +4,34 @@
 
 {% block body %}
 
+    <h1>Tour{{ tour.name }}</h1>
 
-    <h1>Tournée {{ tour.name }}</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Venue</th>
+            <th>Allowance</th>
+            <th>Accommodation</th>
+            <th>Is public</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in tour.events %}
+                <tr>
+                    <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.dateEvent | date('m-d-Y') }}</a></td>
+                    <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
+                    <td>{{ event.allowance }} {{ event.currency }}</td>
+                    <td>{{ event.hasAccommodation }}</td>
+                    <td>{{ event.isPublic }}</td>
+                    <td><a class="btn-info" href="{{ path('contact_edit', {"id" : event.id}) }}">Edit</a></td>
+                    <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : event.id}) }}">Delete</a></td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    {# TODO liste des dates de la tournée #}
 
     <a href="{{ path('tour_delete', {'id': tour.id}) }}"
        class="btn btn-danger">

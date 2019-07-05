@@ -9,4 +9,22 @@
        class="btn btn-edit">
         add
     </a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for artist in artists %}
+            <tr>
+                <td><a href="{{ path('artist_show', {"id" : artist.id}) }}">{{ artist.name }}</a></td>
+                <td><a class="btn-info" href="{{ path('artist_edit', {"id" : artist.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('artist_delete', {"id" : artist.id}) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

@@ -14,10 +14,18 @@ use App\Entity\Venue;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class DataFixtures extends Fixture
 {
+    public $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
@@ -29,7 +37,12 @@ class DataFixtures extends Fixture
             $randomNickname = $faker->firstName;
             $users[$a]->setNickname($randomNickname);
             $users[$a]->setEmail($randomNickname . "@mail.com");
-            $users[$a]->setPassword($faker->password);
+            $users[$a]->setPlainPassword("admin");
+            $pass = $this->passwordEncoder->encodePassword(
+                $users[$a],
+                $users[$a]->getPlainPassword()
+            );
+            $users[$a]->setPassword($pass);
 
             $manager->persist($users[$a]);
 

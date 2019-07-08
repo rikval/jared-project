@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr>
-                <td><a href="{{ path('contact_show', {"id" : contact.id}) }}">{{ contact.name }}</a></td>
+                <td>{{ contact.name }}</td>
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.phone }}</td>
                 <td>{{ contact.website }}</td>
@@ -44,6 +44,7 @@
         </tr>
         </thead>
         <tbody>
+        <h2>Events</h2>
         {% for event in contact.events %}
             <tr>
                 <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.dateEvent | date('m-d-Y') }}</a></td>
@@ -51,8 +52,8 @@
                 <td>{{ event.allowance }} {{ event.currency }}</td>
                 <td>{{ event.hasAccommodation }}</td>
                 <td>{{ event.isPublic }}</td>
-                <td><a class="btn-info" href="{{ path('contact_edit', {"id" : event.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : event.id}) }}">Delete</a></td>
+                <td><a class="btn-info" href="{{ path('event_edit', {"id" : event.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('event_delete', {"id" : event.id}) }}">Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

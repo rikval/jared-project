@@ -93,12 +93,12 @@ class ContactController extends AbstractController
             if($form->isValid()){
                 $this->getDoctrine()->getManager()->flush();
 
-                //TODO ajouter un message de validation d'edition
+                $this->addFlash('success', 'Contact has been edited !');
                 return $this->redirectToRoute('contact_show', [
                     'id' => $contact->getId()
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
@@ -119,7 +119,7 @@ class ContactController extends AbstractController
         $entityManager->remove($contact);
         $entityManager->flush();
 
-        //TODO ajouter un message de confirmation de suppression
+        $this->addFlash('success', 'Contact has been deleted !');
         return $this->redirectToRoute('contact_index');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Venue;
 use App\Form\VenueType;
+use App\Repository\VenueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,11 @@ class VenueController extends AbstractController
     /**
      * @Route("/", name="venue_index")
      */
-    public function index()
+    public function index(VenueRepository $repo)
     {
+        $venues = $repo->findAll();
         return $this->render('venue/index.html.twig', [
-            'controller_name' => 'VenueController',
+            'venues' => $venues,
         ]);
     }
 

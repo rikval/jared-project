@@ -67,7 +67,7 @@ class Contact
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="contact", cascade={"remove"})
      */
     private $relations;
 

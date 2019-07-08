@@ -54,6 +54,7 @@ class Location
     private $zip;
 
     /**
+     * @ORM\joinColumn(onDelete="SET NULL")
      * @ORM\OneToOne(targetEntity="App\Entity\Venue", cascade={"persist", "remove"})
      */
     private $venue;

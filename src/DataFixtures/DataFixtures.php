@@ -22,6 +22,7 @@ class DataFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
+
         // Creating user fixtures
         $users = [];
         for($a = 1; $a <= 10; $a++){

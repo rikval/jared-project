@@ -54,7 +54,7 @@ class User implements UserInterface
     private $role = 'ROLE_USER';
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Artist", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Artist", mappedBy="user", cascade={"remove"})
      */
     private $artist;
 

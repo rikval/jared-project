@@ -43,6 +43,7 @@ class Venue
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Location", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $location;
 

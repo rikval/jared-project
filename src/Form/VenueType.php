@@ -19,6 +19,9 @@ class VenueType extends AbstractType
                 'label' => "Venue's name",
                 'required' => true
             ])
+            ->add('location', LocationType::class, [
+                'label' => false
+            ])
             ->add('audienceCapacity', IntegerType::class, [
                 'label' => "audience capacity",
                 'required' => false

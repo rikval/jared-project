@@ -14,9 +14,11 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
+import $ from 'jquery';
+import '../js/plugins/perfect-scrollbar.jquery.min';
 
 (function() {
-  isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+  var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
   if (isWindows) {
     // if we are on windows OS we activate the perfectScrollbar function
@@ -53,11 +55,11 @@ $(document).ready(function() {
 
   $('body').bootstrapMaterialDesign();
 
-  $sidebar = $('.sidebar');
+  var $sidebar = $('.sidebar');
 
   md.initSidebarsCheck();
 
-  window_width = $(window).width();
+  var window_width = $(window).width();
 
   // check if there is an image set for the sidebar's background
   md.checkSidebarImage();
@@ -86,7 +88,7 @@ $(document).ready(function() {
 });
 
 $(document).on('click', '.navbar-toggler', function() {
-  $toggle = $(this);
+  var $toggle = $(this);
 
   if (mobile_menu_visible == 1) {
     $('html').removeClass('nav-open');
@@ -149,7 +151,7 @@ $(window).resize(function() {
 
 
 
-md = {
+var md = {
   misc: {
     navbar_menu_visible: 0,
     active_collapse: true,
@@ -157,11 +159,11 @@ md = {
   },
 
   checkSidebarImage: function() {
-    $sidebar = $('.sidebar');
-    image_src = $sidebar.data('image');
+    var $sidebar = $('.sidebar');
+    var image_src = $sidebar.data('image');
 
     if (image_src !== undefined) {
-      sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
+      var sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
       $sidebar.append(sidebar_container);
     }
   },
@@ -179,14 +181,14 @@ md = {
     if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0 || $('#websiteViewsChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization    ==========---------- */
 
-      dataDailySalesChart = {
+      var dataDailySalesChart = {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         series: [
           [12, 17, 7, 17, 23, 18, 38]
         ]
       };
 
-      optionsDailySalesChart = {
+      var optionsDailySalesChart = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
@@ -207,14 +209,14 @@ md = {
 
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
-      dataCompletedTasksChart = {
+      var dataCompletedTasksChart = {
         labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
         series: [
           [230, 750, 450, 300, 280, 240, 200, 190]
         ]
       };
 
-      optionsCompletedTasksChart = {
+      var optionsCompletedTasksChart = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
@@ -274,9 +276,9 @@ md = {
   },
 
   showNotification: function(from, align) {
-    type = ['', 'info', 'danger', 'success', 'warning', 'primary'];
+    var type = ['', 'info', 'danger', 'success', 'warning', 'primary'];
 
-    color = Math.floor((Math.random() * 5) + 1);
+    var color = Math.floor((Math.random() * 5) + 1);
 
     $.notify({
       icon: "add_alert",
@@ -308,25 +310,25 @@ md = {
 
   initRightMenu: debounce(function() {
 
-    $sidebar_wrapper = $('.sidebar-wrapper');
+    var $sidebar_wrapper = $('.sidebar-wrapper');
 
     if (!mobile_menu_initialized) {
       console.log('intra');
-      $navbar = $('nav').find('.navbar-collapse').children('.navbar-nav');
+      var $navbar = $('nav').find('.navbar-collapse').children('.navbar-nav');
 
-      mobile_menu_content = '';
+      var mobile_menu_content = '';
 
-      nav_content = $navbar.html();
+      var nav_content = $navbar.html();
 
-      nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + '</ul>';
+      var nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + '</ul>';
 
-      navbar_form = $('nav').find('.navbar-form').length != 0 ? $('nav').find('.navbar-form')[0].outerHTML : null;
+      var navbar_form = $('nav').find('.navbar-form').length != 0 ? $('nav').find('.navbar-form')[0].outerHTML : null;
 
-      $sidebar_nav = $sidebar_wrapper.find(' > .nav');
+      var $sidebar_nav = $sidebar_wrapper.find(' > .nav');
 
       // insert the navbar form before the sidebar list
-      $nav_content = $(nav_content);
-      $navbar_form = $(navbar_form);
+      var $nav_content = $(nav_content);
+      var $navbar_form = $(navbar_form);
       $nav_content.insertBefore($sidebar_nav);
       $navbar_form.insertBefore($nav_content);
 

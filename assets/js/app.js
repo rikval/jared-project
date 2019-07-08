@@ -9,22 +9,20 @@
 import '../css/app.css';
 
 
+import 'bootstrap-material-design';
+import '../js/material-dashboard';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
-// import $ from 'jquery';
-
-import 'bootstrap-material-design';
 
 // import '../js/core/jquery.min';
 // import '../js/core/popper.min';
 
-import '../js/material-dashboard.min';
-import '../js/plugins/perfect-scrollbar.jquery.min';
+// import '../js/material-dashboard?v=2.1.0';
+
+// import '../js/plugins/perfect-scrollbar.jquery.min';
 import '../js/plugins/chartist.min';
 import '../js/plugins/bootstrap-notify';
 
-import '../js/material-dashboard?v=2.1.0';
 
 
 

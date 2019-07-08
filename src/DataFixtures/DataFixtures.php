@@ -54,7 +54,7 @@ class DataFixtures extends Fixture
                 $contacts[$f]->setEmail($faker->email);
                 $contacts[$f]->setLanguage($faker->languageCode);
                 $contacts[$f]->setPhone($faker->phoneNumber);
-                $contacts[$f]->setWebsite($faker->url);
+                $contacts[$f]->setWebsite($faker->domainName);
                 $contacts[$f]->setUser($users[$a]);
 
                 $manager->persist($contacts[$f]);

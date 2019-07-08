@@ -63,10 +63,10 @@ class ArtistController extends AbstractController
                 $entityManager->persist($artist);
                 $entityManager->flush();
 
-                // TODO ajouter un message de validation de création de formulaire
+                $this->addFlash('success', 'Artist has been created !');
                 return $this->redirectToRoute('artist_index');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('artist/new.html.twig', [
             'artist' => $artist,
@@ -90,12 +90,12 @@ class ArtistController extends AbstractController
             if($form->isValid()){
                 $this->getDoctrine()->getManager()->flush();
 
-                //TODO ajouter un message de validation d'edition
+                $this->addFlash('success', 'Artist has been updated !');
                 return $this->redirectToRoute('artist_show', [
                     'id' => $artist->getId()
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('artist/edit.html.twig', [
             'artist' => $artist,
@@ -116,7 +116,7 @@ class ArtistController extends AbstractController
         $entityManager->remove($artist);
         $entityManager->flush();
 
-        //TODO ajouter un message de confirmation de suppression
+        $this->addFlash('success', 'Artist has been deleted !');
         return $this->redirectToRoute('artist_index');
     }
 }

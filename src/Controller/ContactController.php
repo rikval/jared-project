@@ -114,7 +114,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @param EntityManagerInterface $em
+     *
      * @param Contact $contact
      * @return Response
      *

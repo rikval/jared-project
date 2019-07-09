@@ -122,16 +122,16 @@ class VenueController extends AbstractController
                                 'id' => $venue->getId()
                             ]);
                         }
+                        $this->addFlash('success', 'Venue has been edited !');
                     }
                     return $this->render('venue/edit.html.twig', [
                         'venue' => $venue,
                         'form' => $form->createView(),
                     ]);
                 }
-                $this->addFlash('success', 'Venue has been edited !');
             }
-            $this->addFlash('error', 'The form contains errors');
         }
+        $this->addFlash('error', 'The form contains errors');
         return $this->redirectToRoute("home_index");
     }
 
@@ -154,7 +154,7 @@ class VenueController extends AbstractController
                     $entityManager->remove($venue);
                     $entityManager->flush();
 
-        $this->addFlash('success', 'Venue has been deleted !');
+                    $this->addFlash('success', 'Venue has been deleted !');
                     return $this->redirectToRoute('venue_index');
                 }
             }

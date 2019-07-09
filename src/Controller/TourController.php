@@ -102,14 +102,16 @@ class TourController extends AbstractController
                     if ($form->isValid()) {
                         $this->getDoctrine()->getManager()->flush();
 
-                $this->addFlash('success', 'Tour has been edited !');
-                return $this->redirectToRoute('tour_show', [
-                    'id' => $tour->getId()
-                ]);
+                        $this->addFlash('success', 'Tour has been edited !');
+                        return $this->redirectToRoute('tour_show', [
+                            'id' => $tour->getId()
+                        ]);
+                    }
+                    $this->addFlash('error', 'The form contains errors');
+                }
+                return $this->redirectToRoute("home_index");
             }
-            $this->addFlash('error', 'The form contains errors');
         }
-        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -127,10 +129,10 @@ class TourController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($tour);
                 $entityManager->flush();
+                $this->addFlash('success', 'Tour has been deleted !');
                 return $this->redirectToRoute('tour_index');
             }
         }
         return $this->redirectToRoute("home_index");
-        $this->addFlash('success', 'Tour has been deleted !');
     }
 }

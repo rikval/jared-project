@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Artist;
 use App\Entity\Tour;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,6 +18,13 @@ class TourType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'tour name',
+                'required' => true
+            ])
+            ->add('artist', EntityType::class, [
+                'class' => Artist::class,
+                'choice_label' => 'name',
+                'label' => 'Artist',
+                'placeholder' => 'Choose an artist',
                 'required' => true
             ])
             ->add('startDate', DateType::class, [

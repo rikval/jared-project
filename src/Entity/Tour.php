@@ -49,6 +49,7 @@ class Tour
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tours")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="You must choose an artist")
      */
     private $artist;
 

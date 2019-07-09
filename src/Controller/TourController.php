@@ -116,7 +116,7 @@ class TourController extends AbstractController
         $entityManager->remove($tour);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Location has been deleted !');
+        $this->addFlash('success', 'Tour has been deleted !');
         return $this->redirectToRoute('tour_index');
     }
 }

@@ -24,9 +24,18 @@ class EventController extends AbstractController
     /**
      * @Route("/", name="event_index")
      */
-    public function index(EventRepository $repo)
+    public function index()
     {
-        $events = $repo->findAll();
+        $permissions = $this->getUser()->getPermissions();
+        foreach($permissions as $p){
+            $tours[] = $p->getTour();
+        }
+        foreach ($tours as $t){
+            $tourEvents[] = $t->getEvents();
+            foreach ($tourEvents as $e){
+                $events = $e;
+            }
+        }
         return $this->render('event/index.html.twig', [
             'events' => $events,
         ]);
@@ -40,9 +49,17 @@ class EventController extends AbstractController
      */
     public function show(Event $event): Response
     {
-        return $this->render('event/show.html.twig', [
-            'event' => $event
-        ]);
+        $tour = $event->getTour();
+        $permissions = $tour->getPermissions();
+
+            foreach ($permissions as $p){
+            if($p->getUser() === $this->getUser()){
+                return $this->render('event/show.html.twig', [
+                    'event' => $event
+                ]);
+            }
+        }
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -84,28 +101,36 @@ class EventController extends AbstractController
      */
     public function edit(Request $request, Event $event): Response
     {
-        $form = $this->createForm(EventType::class, $event);
-        $form->handleRequest($request);
+        $tour = $event->getTour();
+        $permissions = $tour->getPermissions();
 
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                $this->getDoctrine()->getManager()->flush();
+        foreach ($permissions as $p) {
+            if ($p->getUser() === $this->getUser()) {
+                $form = $this->createForm(EventType::class, $event);
+                $form->handleRequest($request);
 
-                //TODO ajouter un message de validation d'edition
-                return $this->redirectToRoute('event_show', [
-                    'id' => $event->getId()
+                if ($form->isSubmitted()) {
+                    if ($form->isValid()) {
+                        $this->getDoctrine()->getManager()->flush();
+
+                        //TODO ajouter un message de validation d'edition
+                        return $this->redirectToRoute('event_show', [
+                            'id' => $event->getId()
+                        ]);
+                    }
+                    //TODO ajouter un message d'erreur de formulaire non valide
+                }
+                return $this->render('event/edit.html.twig', [
+                    'event' => $event,
+                    'form' => $form->createView(),
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
         }
-        return $this->render('event/edit.html.twig', [
-            'event' => $event,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute("home_index");
     }
 
     /**
-     * @param EntityManagerInterface $em
+     *
      * @param Event $event
      * @return Response
      *
@@ -113,11 +138,19 @@ class EventController extends AbstractController
      */
     public function delete(Event $event)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($event);
-        $entityManager->flush();
+        $tour = $event->getTour();
+        $permissions = $tour->getPermissions();
 
-        //TODO ajouter un message de confirmation de suppression
-        return $this->redirectToRoute('event_index');
+        foreach ($permissions as $p) {
+            if ($p->getUser() === $this->getUser()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($event);
+                $entityManager->flush();
+
+                //TODO ajouter un message de confirmation de suppression
+                return $this->redirectToRoute('event_index');
+            }
+        }
+        return $this->redirectToRoute("home_index");
     }
 }

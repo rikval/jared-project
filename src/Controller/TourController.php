@@ -6,6 +6,7 @@ use App\Entity\Tour;
 use App\Form\TourType;
 use App\Repository\TourRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class TourController
  * @package App\Controller
  * @Route("/tour")
+ *@IsGranted("ROLE_USER")
  *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
  */
 class TourController extends AbstractController
 {

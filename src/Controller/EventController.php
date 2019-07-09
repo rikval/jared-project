@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class EventController
  * @package App\Controller
  * @Route("/event")
- *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
+ *@IsGranted("ROLE_USER")
  */
 class EventController extends AbstractController
 {

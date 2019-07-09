@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  *
  * @Route("/user")
+ *
  */
 class UserController extends AbstractController
 {

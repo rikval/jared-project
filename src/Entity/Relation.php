@@ -21,6 +21,7 @@ class Relation
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="relations")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank(message="You must chose an artist to build a relation")
+     *
      */
     private $artist;
 
@@ -34,6 +35,7 @@ class Relation
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank(message="You must characterize the relation to build it")
+     *
      */
     private $affinity;
 

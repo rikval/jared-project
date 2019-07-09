@@ -48,7 +48,7 @@ class Tour
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tours")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $artist;
 

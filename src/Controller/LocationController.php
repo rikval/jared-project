@@ -85,12 +85,12 @@ class LocationController extends AbstractController
             if($form->isValid()){
                 $this->getDoctrine()->getManager()->flush();
 
-                //TODO ajouter un message de validation d'edition
+                $this->addFlash('success', 'Location has been edited !');
                 return $this->redirectToRoute('location_show', [
                     'id' => $location->getId()
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('location/edit.html.twig', [
             'location' => $location,
@@ -110,7 +110,7 @@ class LocationController extends AbstractController
         $entityManager->remove($location);
         $entityManager->flush();
 
-        //TODO ajouter un message de confirmation de suppression
+        $this->addFlash('success', 'Location has been deleted !');
         return $this->redirectToRoute('location_index');
     }
 }

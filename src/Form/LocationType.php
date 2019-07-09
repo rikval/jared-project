@@ -28,7 +28,7 @@ class LocationType extends AbstractType
             )
             ->add('city', TextType::class, [
                     'label' => 'city',
-                    'required' => false
+                    'required' => true
                 ]
             )
             ->add('country', CountryType::class, [

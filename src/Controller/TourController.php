@@ -63,10 +63,10 @@ class TourController extends AbstractController
                 $entityManager->persist($tour);
                 $entityManager->flush();
 
-                // TODO ajouter un message de validation de création de formulaire
+                $this->addFlash('success', 'Tour has been created !');
                 return $this->redirectToRoute('tour_index');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('tour/new.html.twig', [
             'tour' => $tour,
@@ -90,12 +90,12 @@ class TourController extends AbstractController
             if($form->isValid()){
                 $this->getDoctrine()->getManager()->flush();
 
-                //TODO ajouter un message de validation d'edition
+                $this->addFlash('success', 'Tour has been edited !');
                 return $this->redirectToRoute('tour_show', [
                     'id' => $tour->getId()
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('tour/edit.html.twig', [
             'tour' => $tour,
@@ -116,7 +116,7 @@ class TourController extends AbstractController
         $entityManager->remove($tour);
         $entityManager->flush();
 
-        //TODO ajouter un message de confirmation de suppression
+        $this->addFlash('success', 'Location has been deleted !');
         return $this->redirectToRoute('tour_index');
     }
 }

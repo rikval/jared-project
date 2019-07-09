@@ -88,12 +88,12 @@ class VenueController extends AbstractController
             if($form->isValid()){
                 $this->getDoctrine()->getManager()->flush();
 
-                //TODO ajouter un message de validation d'edition
+                $this->addFlash('success', 'Venue has been edited !');
                 return $this->redirectToRoute('venue_show', [
                     'id' => $venue->getId()
                 ]);
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('venue/edit.html.twig', [
             'venue' => $venue,
@@ -114,7 +114,7 @@ class VenueController extends AbstractController
         $entityManager->remove($venue);
         $entityManager->flush();
 
-        //TODO ajouter un message de confirmation de suppression
+        $this->addFlash('success', 'Venue has been deleted !');
         return $this->redirectToRoute('venue_index');
     }
 }

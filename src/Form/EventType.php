@@ -7,6 +7,7 @@ use App\Entity\Venue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,7 +45,7 @@ class EventType extends AbstractType
                 'label' => "allowance",
                 'required' => false
             ])
-            ->add('currency', TextType::class, [
+            ->add('currency', CurrencyType::class, [
                 'label' => "currency",
                 'required' => false
             ])

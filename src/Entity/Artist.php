@@ -32,12 +32,14 @@ class Artist
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="artist")
+     * @ORM\OneToMany(targetEntity="App\Entity\Relation", mappedBy="artist", cascade={"remove"})
+     *
      */
     private $relations;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tour", mappedBy="artist", orphanRemoval=true)
+     *
      */
     private $tours;
 

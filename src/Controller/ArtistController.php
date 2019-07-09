@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Artist;
 use App\Form\ArtistType;
 use App\Repository\ArtistRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,17 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ArtistController
  * @package App\Controller
  * @Route("/artist")
+ * @IsGranted("ROLE_USER")
  *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
  */
 class ArtistController extends AbstractController
 {
     /**
      * @Route("/", name="artist_index")
      */
-    public function index(ArtistRepository $repo)
+    public function index()
     {
-        $artists = $repo->findAll();
+        $artists = $this->getUser()->getArtist();
         return $this->render('artist/index.html.twig', [
             'artists' => $artists,
         ]);
@@ -39,9 +40,12 @@ class ArtistController extends AbstractController
      */
     public function show(Artist $artist): Response
     {
-        return $this->render('artist/show.html.twig', [
-            'artist' => $artist
-        ]);
+        if($artist->getUser() === $this->getUser()){
+            return $this->render('artist/show.html.twig', [
+                'artist' => $artist
+            ]);
+        }
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -83,24 +87,27 @@ class ArtistController extends AbstractController
      */
     public function edit(Request $request, Artist $artist): Response
     {
-        $form = $this->createForm(ArtistType::class, $artist);
-        $form->handleRequest($request);
+        if($artist->getUser() === $this->getUser()){
+            $form = $this->createForm(ArtistType::class, $artist);
+            $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                $this->getDoctrine()->getManager()->flush();
+            if($form->isSubmitted()){
+                if($form->isValid()){
+                    $this->getDoctrine()->getManager()->flush();
 
-                $this->addFlash('success', 'Artist has been updated !');
-                return $this->redirectToRoute('artist_show', [
-                    'id' => $artist->getId()
-                ]);
+                    $this->addFlash('success', 'Artist has been updated !');
+                    return $this->redirectToRoute('artist_show', [
+                        'id' => $artist->getId()
+                    ]);
+                }
+                $this->addFlash('error', 'The form contains errors');
             }
-            $this->addFlash('error', 'The form contains errors');
+            return $this->render('artist/edit.html.twig', [
+                'artist' => $artist,
+                'form' => $form->createView(),
+            ]);
         }
-        return $this->render('artist/edit.html.twig', [
-            'artist' => $artist,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -112,11 +119,14 @@ class ArtistController extends AbstractController
      */
     public function delete(Artist $artist)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($artist);
-        $entityManager->flush();
+        if($artist->getUser() === $this->getUser()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($artist);
+            $entityManager->flush();
 
-        $this->addFlash('success', 'Artist has been deleted !');
-        return $this->redirectToRoute('artist_index');
+            $this->addFlash('success', 'Artist has been deleted !');
+            return $this->redirectToRoute('artist_index');
+        }
+        return $this->redirectToRoute("home_index");
     }
 }

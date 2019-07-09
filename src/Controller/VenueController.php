@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Venue;
 use App\Form\VenueType;
+use App\Repository\VenueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +26,21 @@ class VenueController extends AbstractController
      */
     public function index()
     {
+        $permissions = $this->getUser()->getPermissions();
+        foreach($permissions as $p){
+            $tours[] = $p->getTour();
+        }
+        foreach ($tours as $t){
+            $tourEvents[] = $t->getEvents();
+            foreach ($tourEvents as $e){
+                $events = $e;
+                foreach ($events as $ev){
+                    $venues[] = $ev->getVenue();
+                }
+            }
+        }
         return $this->render('venue/index.html.twig', [
-            'controller_name' => 'VenueController',
+            'venues' => $venues,
         ]);
     }
 
@@ -38,9 +52,19 @@ class VenueController extends AbstractController
      */
     public function show(Venue $venue): Response
     {
-        return $this->render('venue/show.html.twig', [
-            'venue' => $venue
-        ]);
+        $event = $venue->getEvent();
+        foreach($event as $e){
+            $tour = $e->getTour();
+            $permissions = $tour->getPermissions();
+            foreach ($permissions as $p) {
+                if ($p->getUser() === $this->getUser()) {
+                    return $this->render('venue/show.html.twig', [
+                        'venue' => $venue
+                    ]);
+                }
+            }
+        }
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -81,28 +105,38 @@ class VenueController extends AbstractController
      */
     public function edit(Request $request, Venue $venue): Response
     {
-        $form = $this->createForm(VenueType::class, $venue);
-        $form->handleRequest($request);
+        $event = $venue->getEvent();
+        foreach($event as $e) {
+            $tour = $e->getTour();
+            $permissions = $tour->getPermissions();
+            foreach ($permissions as $p) {
+                if ($p->getUser() === $this->getUser()) {
+                    $form = $this->createForm(VenueType::class, $venue);
+                    $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                $this->getDoctrine()->getManager()->flush();
+                    if ($form->isSubmitted()) {
+                        if ($form->isValid()) {
+                            $this->getDoctrine()->getManager()->flush();
 
+                            return $this->redirectToRoute('venue_show', [
+                                'id' => $venue->getId()
+                            ]);
+                        }
+                    }
+                    return $this->render('venue/edit.html.twig', [
+                        'venue' => $venue,
+                        'form' => $form->createView(),
+                    ]);
+                }
                 $this->addFlash('success', 'Venue has been edited !');
-                return $this->redirectToRoute('venue_show', [
-                    'id' => $venue->getId()
-                ]);
             }
             $this->addFlash('error', 'The form contains errors');
         }
-        return $this->render('venue/edit.html.twig', [
-            'venue' => $venue,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute("home_index");
     }
 
+
     /**
-     * @param EntityManagerInterface $em
      * @param Venue $venue
      * @return Response
      *
@@ -110,11 +144,21 @@ class VenueController extends AbstractController
      */
     public function delete(Venue $venue)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($venue);
-        $entityManager->flush();
+        $event = $venue->getEvent();
+        foreach($event as $e) {
+            $tour = $e->getTour();
+            $permissions = $tour->getPermissions();
+            foreach ($permissions as $p) {
+                if ($p->getUser() === $this->getUser()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->remove($venue);
+                    $entityManager->flush();
 
         $this->addFlash('success', 'Venue has been deleted !');
-        return $this->redirectToRoute('venue_index');
+                    return $this->redirectToRoute('venue_index');
+                }
+            }
+        }
+        return $this->redirectToRoute("home_index");
     }
 }

@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} - edit: {{ contact.name }} {% endblock %}
+
 {% block body %}
-    <h1>Add a contact</h1>
+    <h1>Edit {{ contact.name }}</h1>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}

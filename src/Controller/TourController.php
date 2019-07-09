@@ -24,9 +24,12 @@ class TourController extends AbstractController
     /**
      * @Route("/", name="tour_index")
      */
-    public function index(TourRepository $repo)
+    public function index()
     {
-        $tours = $repo->findAll();
+        $permissions = $this->getUser()->getPermissions();
+        foreach($permissions as $p){
+            $tours[] = $p->getTour();
+        }
         return $this->render('tour/index.html.twig', [
             'tours' => $tours,
         ]);
@@ -40,9 +43,15 @@ class TourController extends AbstractController
      */
     public function show(Tour $tour): Response
     {
-        return $this->render('tour/show.html.twig', [
-            'tour' => $tour
-        ]);
+        $permissions = $tour->getPermissions();
+        foreach ($permissions as $p){
+            if($p->getUser() === $this->getUser()){
+                return $this->render('tour/show.html.twig', [
+                    'tour' => $tour
+                ]);
+            }
+        }
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -83,12 +92,15 @@ class TourController extends AbstractController
      */
     public function edit(Request $request, Tour $tour): Response
     {
-        $form = $this->createForm(TourType::class, $tour);
-        $form->handleRequest($request);
+        $permissions = $tour->getPermissions();
+        foreach ($permissions as $p) {
+            if ($p->getUser() === $this->getUser()) {
+                $form = $this->createForm(TourType::class, $tour);
+                $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                $this->getDoctrine()->getManager()->flush();
+                if ($form->isSubmitted()) {
+                    if ($form->isValid()) {
+                        $this->getDoctrine()->getManager()->flush();
 
                 $this->addFlash('success', 'Tour has been edited !');
                 return $this->redirectToRoute('tour_show', [
@@ -97,14 +109,11 @@ class TourController extends AbstractController
             }
             $this->addFlash('error', 'The form contains errors');
         }
-        return $this->render('tour/edit.html.twig', [
-            'tour' => $tour,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute("home_index");
     }
 
     /**
-     * @param EntityManagerInterface $em
+     *
      * @param Tour $tour
      * @return Response
      *
@@ -112,11 +121,16 @@ class TourController extends AbstractController
      */
     public function delete(Tour $tour)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($tour);
-        $entityManager->flush();
-
+        $permissions = $tour->getPermissions();
+        foreach ($permissions as $p) {
+            if ($p->getUser() === $this->getUser()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($tour);
+                $entityManager->flush();
+                return $this->redirectToRoute('tour_index');
+            }
+        }
+        return $this->redirectToRoute("home_index");
         $this->addFlash('success', 'Tour has been deleted !');
-        return $this->redirectToRoute('tour_index');
     }
 }

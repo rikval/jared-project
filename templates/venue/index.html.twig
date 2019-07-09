@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VenueController!{% endblock %}
+{% block title %}{{ parent() }} - Your venues{% endblock %}
 
 {% block body %}
     <h1>Venues</h1>
@@ -9,4 +9,28 @@
        class="btn btn-edit">
         add
     </a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Audience capacity</th>
+            <th>Adress</th>
+            <th colspan="2">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for venue in venues %}
+            <tr>
+                <td><a href="{{ path('venue_show', {"id" : venue.id}) }}">{{ venue.name }}</a></td>
+                <td>{{ venue.audienceCapacity }}</td>
+                <td>{{ venue.location.streetNumber }}.{{ venue.location.streetName }} {{ venue.location.City }}
+                    {{ venue.location.country }} {{ venue.location.zip }}
+                </td>
+                <td><a class="btn-info" href="{{ path('venue_edit', {"id" : venue.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('venue_delete', {"id" : venue.id}) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

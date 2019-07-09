@@ -24,9 +24,9 @@ class ContactController extends AbstractController
     /**
      * @Route("/", name="contact_index")
      */
-    public function index(ContactRepository $repo)
+    public function index()
     {
-        $contacts = $repo->findAll();
+        $contacts = $this->getUser()->getContact();
         return $this->render('contact/index.html.twig', [
             'contacts' => $contacts,
         ]);
@@ -40,9 +40,12 @@ class ContactController extends AbstractController
      */
     public function show(Contact $contact): Response
     {
-        return $this->render('contact/show.html.twig', [
-            'contact' => $contact
-        ]);
+        if($contact->getUser() === $this->getUser()){
+            return $this->render('contact/show.html.twig', [
+                'contact' => $contact
+            ]);
+        }
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -86,24 +89,28 @@ class ContactController extends AbstractController
      */
     public function edit(Request $request, Contact $contact): Response
     {
-        $form = $this->createForm(ContactType::class, $contact);
-        $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            if($form->isValid()){
-                $this->getDoctrine()->getManager()->flush();
+        if($contact->getUser() === $this->getUser()){
+            $form = $this->createForm(ContactType::class, $contact);
+            $form->handleRequest($request);
 
-                $this->addFlash('success', 'Contact has been edited !');
-                return $this->redirectToRoute('contact_show', [
-                    'id' => $contact->getId()
-                ]);
+            if($form->isSubmitted()){
+                if($form->isValid()){
+                    $this->getDoctrine()->getManager()->flush();
+
+                    $this->addFlash('success', 'Contact has been edited !');
+                    return $this->redirectToRoute('contact_show', [
+                        'id' => $contact->getId()
+                    ]);
+                }
+                $this->addFlash('error', 'The form contains errors');
             }
-            $this->addFlash('error', 'The form contains errors');
+            return $this->render('contact/edit.html.twig', [
+                'contact' => $contact,
+                'form' => $form->createView(),
+            ]);
         }
-        return $this->render('contact/edit.html.twig', [
-            'contact' => $contact,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute("home_index");
     }
 
     /**
@@ -115,11 +122,14 @@ class ContactController extends AbstractController
      */
     public function delete(Contact $contact)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($contact);
-        $entityManager->flush();
+        if($contact->getUser() === $this->getUser()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($contact);
+            $entityManager->flush();
 
-        $this->addFlash('success', 'Contact has been deleted !');
-        return $this->redirectToRoute('contact_index');
+            $this->addFlash('success', 'Contact has been deleted !');
+            return $this->redirectToRoute('contact_index');
+        }
+        return $this->redirectToRoute("home_index");
     }
 }

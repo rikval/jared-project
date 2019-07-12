@@ -2,13 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @ApiResource(
+ *     normalizationContext={"groups"={"events:read"}}
+ * )
+ *
+ * @ApiFilter(BooleanFilter::class, properties={"isPublic"})
  */
 class Event
 {
@@ -16,22 +25,27 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"events:read"})
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="You must give a date to your event")
+     * @Groups({"events:read"})
      */
     private $dateEvent;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"events:read"})
      */
     private $startHour;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"events:read"})
      */
     private $endHour;
 
@@ -57,11 +71,13 @@ class Event
 
     /**
      * @ORM\Column(type="boolean")
+     *
      */
-    private $isPublic;
+    private $isPublic = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event")
+     * @Groups({"events:read"})
      */
     private $venue;
 
@@ -71,13 +87,19 @@ class Event
     private $contacts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="shows")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="events")
      */
     private $tour;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="events")
+     */
+    private $users;
 
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +251,34 @@ class Event
     public function setTour(?Tour $tour): self
     {
         $this->tour = $tour;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeEvent($this);
+        }
 
         return $this;
     }

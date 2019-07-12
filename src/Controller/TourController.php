@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Permission;
 use App\Entity\Tour;
 use App\Form\TourType;
-use App\Repository\TourRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @Route("/tour")
  *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
+ *
  */
 class TourController extends AbstractController
 {
@@ -68,7 +68,14 @@ class TourController extends AbstractController
 
         if($form->isSubmitted()){
             if($form->isValid()){
+
+                $permission = new Permission();
+                $permission->setUser($this->getUser());
+                $permission->setTour($tour);
+                $permission->setPermission("Administrator");
+
                 $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($permission);
                 $entityManager->persist($tour);
                 $entityManager->flush();
 

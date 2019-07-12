@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
-use App\Repository\EventRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +24,7 @@ class EventController extends AbstractController
      */
     public function index()
     {
-        $permissions = $this->getUser()->getPermissions();
-        foreach($permissions as $p){
-            $tours[] = $p->getTour();
-        }
-        foreach ($tours as $t){
-            $tourEvents[] = $t->getEvents();
-            foreach ($tourEvents as $e){
-                $events = $e;
-            }
-        }
+        $events = $this->getUser()->getEvents();
         return $this->render('event/index.html.twig', [
             'events' => $events,
         ]);
@@ -49,17 +38,17 @@ class EventController extends AbstractController
      */
     public function show(Event $event): Response
     {
-        $tour = $event->getTour();
-        $permissions = $tour->getPermissions();
-
-            foreach ($permissions as $p){
-            if($p->getUser() === $this->getUser()){
-                return $this->render('event/show.html.twig', [
-                    'event' => $event
-                ]);
-            }
+        if($event->getIsPublic() === false){
+            if ($event->getUsers()->contains($this->getUser())){
+            return $this->render('event/show.html.twig', [
+                'event' => $event
+            ]);
         }
-        return $this->redirectToRoute("home_index");
+            return $this->redirectToRoute("home_index");
+        }
+        return $this->render('event/show.html.twig', [
+            'event' => $event
+        ]);
     }
 
     /**
@@ -73,6 +62,7 @@ class EventController extends AbstractController
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+        $event->addUser($this->getUser());
 
         if($form->isSubmitted()){
             if($form->isValid()){
@@ -101,30 +91,25 @@ class EventController extends AbstractController
      */
     public function edit(Request $request, Event $event): Response
     {
-        $tour = $event->getTour();
-        $permissions = $tour->getPermissions();
+        if($event->getUsers()->contains($this->getUser())) {
+            $form = $this->createForm(EventType::class, $event);
+            $form->handleRequest($request);
 
-        foreach ($permissions as $p) {
-            if ($p->getUser() === $this->getUser()) {
-                $form = $this->createForm(EventType::class, $event);
-                $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $this->getDoctrine()->getManager()->flush();
 
-                if ($form->isSubmitted()) {
-                    if ($form->isValid()) {
-                        $this->getDoctrine()->getManager()->flush();
-
-                        //TODO ajouter un message de validation d'edition
-                        return $this->redirectToRoute('event_show', [
-                            'id' => $event->getId()
-                        ]);
-                    }
-                    //TODO ajouter un message d'erreur de formulaire non valide
+                    //TODO ajouter un message de validation d'edition
+                    return $this->redirectToRoute('event_show', [
+                        'id' => $event->getId()
+                    ]);
                 }
-                return $this->render('event/edit.html.twig', [
-                    'event' => $event,
-                    'form' => $form->createView(),
-                ]);
+                //TODO ajouter un message d'erreur de formulaire non valide
             }
+            return $this->render('event/edit.html.twig', [
+                'event' => $event,
+                'form' => $form->createView(),
+            ]);
         }
         return $this->redirectToRoute("home_index");
     }
@@ -138,18 +123,13 @@ class EventController extends AbstractController
      */
     public function delete(Event $event)
     {
-        $tour = $event->getTour();
-        $permissions = $tour->getPermissions();
+        if($event->getUsers()->contains($this->getUser())){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($event);
+            $entityManager->flush();
 
-        foreach ($permissions as $p) {
-            if ($p->getUser() === $this->getUser()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($event);
-                $entityManager->flush();
-
-                //TODO ajouter un message de confirmation de suppression
-                return $this->redirectToRoute('event_index');
-            }
+            //TODO ajouter un message de confirmation de suppression
+            return $this->redirectToRoute('event_index');
         }
         return $this->redirectToRoute("home_index");
     }

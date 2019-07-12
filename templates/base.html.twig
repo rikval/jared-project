@@ -10,6 +10,10 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
             {{encore_entry_link_tags('app')}}
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
         {% endblock %}
     </head>
     <body class="dark-edition">
@@ -166,8 +170,45 @@
         </div>
     </div>
         {% block javascripts %}
+
             {{ encore_entry_script_tags('app') }}
             {#TODO base scripts#}
+            <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', () => {
+                    var calendarEl = document.getElementById('calendar-holder');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        defaultView: 'dayGridMonth',
+                        editable: true,
+                        eventSources: [
+                            {
+                                url: "{{ path('fc_load_events') }}",
+                                method: "POST",
+                                extraParams: {
+                                    filters: JSON.stringify({})
+                                },
+                                failure: () => {
+                                    // alert("There was an error while fetching FullCalendar!");
+                                },
+                            },
+                        ],
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                        },
+                        plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                        timeZone: 'UTC',
+                    });
+                    calendar.render();
+                });
+            </script>
+
+
         {% endblock %}
     </body>
 </html>

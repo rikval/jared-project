@@ -54,8 +54,8 @@ class CalendarListener
              */
 
             $eventEv->setOptions([
-                'backgroundColor' => 'purple',
-                'borderColor' => 'purple',
+                'backgroundColor' => '#9b43a9',
+                'borderColor' => '#9b43a9',
             ]);
             $eventEv->addOption(
                 'url',

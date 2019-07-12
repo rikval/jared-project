@@ -34,8 +34,8 @@
                 <td>{{ event.allowance }} {{ event.currency }}</td>
                 <td>{{ event.hasAccommodation }}</td>
                 <td>{{ event.isPublic }}</td>
-                <td><a class="btn-info" href="{{ path('contact_edit', {"id" : event.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : event.id}) }}">Delete</a></td>
+                <td><a class="btn-info" href="{{ path('event_edit', {"id" : event.id}) }}">Edit</a></td>
+                <td><a class="btn-danger" href="{{ path('event_delete', {"id" : event.id}) }}">Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

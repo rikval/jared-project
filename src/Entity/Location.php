@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
+ * @ApiResource(
+ *     normalizationContext={"groups"={"locations:read"}}
+ * )
  */
 class Location
 {
@@ -19,22 +24,26 @@ class Location
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"locations:read"})
      */
     private $streetNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"locations:read"})
      */
     private $streetName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Please enter a city.")
+     * @Groups({"locations:read"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"locations:read"})
      */
     private $country;
 
@@ -50,6 +59,7 @@ class Location
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"locations:read"})
      */
     private $zip;
 

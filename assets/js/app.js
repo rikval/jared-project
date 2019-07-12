@@ -22,6 +22,7 @@ import '../js/material-dashboard';
 // import '../js/plugins/perfect-scrollbar.jquery.min';
 import '../js/plugins/chartist.min';
 import '../js/plugins/bootstrap-notify';
+import '../js/index.js';
 
 
 

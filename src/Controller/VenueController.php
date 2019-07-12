@@ -17,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class VenueController
  * @package App\Controller
  * @Route("/venue")
- *@IsGranted("ROLE_USER")
+ *
+ *
  */
 class VenueController extends AbstractController
 {
@@ -26,22 +27,13 @@ class VenueController extends AbstractController
      */
     public function index()
     {
-        $permissions = $this->getUser()->getPermissions();
-        foreach($permissions as $p){
-            $tours[] = $p->getTour();
+        if($this->getUser() != null) {
+            $venues = $this->getUser()->getVenues();
+            return $this->render('venue/index.html.twig', [
+                'venues' => $venues,
+            ]);
         }
-        foreach ($tours as $t){
-            $tourEvents[] = $t->getEvents();
-            foreach ($tourEvents as $e){
-                $events = $e;
-                foreach ($events as $ev){
-                    $venues[] = $ev->getVenue();
-                }
-            }
-        }
-        return $this->render('venue/index.html.twig', [
-            'venues' => $venues,
-        ]);
+        return $this->redirectToRoute("security_login");
     }
 
     /**
@@ -52,17 +44,10 @@ class VenueController extends AbstractController
      */
     public function show(Venue $venue): Response
     {
-        $event = $venue->getEvent();
-        foreach($event as $e){
-            $tour = $e->getTour();
-            $permissions = $tour->getPermissions();
-            foreach ($permissions as $p) {
-                if ($p->getUser() === $this->getUser()) {
-                    return $this->render('venue/show.html.twig', [
-                        'venue' => $venue
-                    ]);
-                }
-            }
+        if($venue->getUser() === $this->getUser()){
+            return $this->render('venue/show.html.twig', [
+                'venue' => $venue
+            ]);
         }
         return $this->redirectToRoute("home_index");
     }
@@ -78,6 +63,7 @@ class VenueController extends AbstractController
         $venue = new Venue();
         $form = $this->createForm(VenueType::class, $venue);
         $form->handleRequest($request);
+        $venue->setUser($this->getUser());
 
         if($form->isSubmitted()){
             if($form->isValid()){
@@ -105,33 +91,29 @@ class VenueController extends AbstractController
      */
     public function edit(Request $request, Venue $venue): Response
     {
-        $event = $venue->getEvent();
-        foreach($event as $e) {
-            $tour = $e->getTour();
-            $permissions = $tour->getPermissions();
-            foreach ($permissions as $p) {
-                if ($p->getUser() === $this->getUser()) {
-                    $form = $this->createForm(VenueType::class, $venue);
-                    $form->handleRequest($request);
+        if($venue->getUser() === $this->getUser()) {
+            $form = $this->createForm(VenueType::class, $venue);
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $this->getDoctrine()->getManager()->flush();
 
-                    if ($form->isSubmitted()) {
-                        if ($form->isValid()) {
-                            $this->getDoctrine()->getManager()->flush();
-
-                            return $this->redirectToRoute('venue_show', [
-                                'id' => $venue->getId()
-                            ]);
-                        }
-                        $this->addFlash('success', 'Venue has been edited !');
-                    }
-                    return $this->render('venue/edit.html.twig', [
-                        'venue' => $venue,
-                        'form' => $form->createView(),
+                    $this->addFlash('success', 'Venue has been edited !');
+                    return $this->redirectToRoute('venue_show', [
+                        'id' => $venue->getId()
                     ]);
                 }
+                $this->addFlash('error', 'The form contains errors');
+                return $this->render('venue/edit.html.twig', [
+                    'venue' => $venue,
+                    'form' => $form->createView(),
+                ]);
             }
+            return $this->render('venue/edit.html.twig', [
+                'venue' => $venue,
+                'form' => $form->createView(),
+            ]);
         }
-        $this->addFlash('error', 'The form contains errors');
         return $this->redirectToRoute("home_index");
     }
 
@@ -144,20 +126,13 @@ class VenueController extends AbstractController
      */
     public function delete(Venue $venue)
     {
-        $event = $venue->getEvent();
-        foreach($event as $e) {
-            $tour = $e->getTour();
-            $permissions = $tour->getPermissions();
-            foreach ($permissions as $p) {
-                if ($p->getUser() === $this->getUser()) {
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->remove($venue);
-                    $entityManager->flush();
+        if ($venue->getUser() === $this->getUser()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($venue);
+            $entityManager->flush();
 
-                    $this->addFlash('success', 'Venue has been deleted !');
-                    return $this->redirectToRoute('venue_index');
-                }
-            }
+            $this->addFlash('success', 'Venue has been deleted !');
+            return $this->redirectToRoute('venue_index');
         }
         return $this->redirectToRoute("home_index");
     }

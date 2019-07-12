@@ -14,7 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class LocationController
  * @package App\Controller
  * @Route("/location")
- * @IsGranted("ROLE_USER")
+ *
+ *
  */
 class LocationController extends AbstractController
 {

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Permission;
 use App\Form\PermissionType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @Route("/permission")
  *
- * //TODO ajouter IsGranted("ROLE_USER") quand l'entité User sera créé.
+ *
  */
 class PermissionController extends AbstractController
 {

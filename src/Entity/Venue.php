@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VenueRepository")
+ * @ApiResource(
+ *     normalizationContext={"groups"={"venues:read"}}
+ *     )
  */
 class Venue
 {
@@ -23,6 +28,7 @@ class Venue
      * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank(message="You must give a name to your venue")
      * @Assert\Length(max="60", maxMessage="Venue's name msut be at most {{ limit }} characters")
+     * @Groups({"venues:read", "events:read"})
      */
     private $name;
 
@@ -44,8 +50,14 @@ class Venue
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Location", cascade={"persist", "remove"})
      * @ORM\JoinColumn(onDelete="SET NULL")
+     * @Groups({"venues:read"})
      */
     private $location;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="venues")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -132,6 +144,18 @@ class Venue
     public function setLocation(?Location $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

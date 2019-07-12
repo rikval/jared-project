@@ -109,6 +109,7 @@ class DataFixtures extends Fixture
                     for($e = 1; $e <= mt_rand(4, 50); $e++) {
                         $venues[$e] = new Venue();
                         $venues[$e]->setName($faker->word);
+                        $venues[$e]->setUser($users[$a]);
                         $venues[$e]->setAudienceCapacity($faker->numberBetween(30, 500));
 
                         // Creating location fixtures
@@ -141,6 +142,7 @@ class DataFixtures extends Fixture
                         $events[$d]->setEndAt($faker->dateTimeBetween('-50 days'));
                         $events[$d]->setHasAccommodation($faker->boolean);
                         $events[$d]->setTour($tours[$c]);
+                        $events[$d]->addUser($users[$a]);
                         $events[$d]->setVenue($faker->randomElement($venues));
                         $events[$d]->addContact($faker->randomElement($contacts));
 

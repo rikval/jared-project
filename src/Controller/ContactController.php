@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/contact")
  * @IsGranted("ROLE_USER")
  *
+ *
  */
 class ContactController extends AbstractController
 {
@@ -65,7 +66,6 @@ class ContactController extends AbstractController
 
         if($form->isSubmitted()){
             if($form->isValid()){
-
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($contact);
                 $entityManager->flush();

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="This email is already in use.")
+ * @ApiResource()
  */
 class User implements UserInterface
 {
@@ -73,11 +75,23 @@ class User implements UserInterface
      */
     private $permissions;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", inversedBy="users")
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Venue", mappedBy="user")
+     */
+    private $venues;
+
     public function __construct()
     {
         $this->artist = new ArrayCollection();
         $this->contact = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->venues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -302,6 +316,63 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($permission->getUser() === $this) {
                 $permission->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Venue[]
+     */
+    public function getVenues(): Collection
+    {
+        return $this->venues;
+    }
+
+    public function addVenue(Venue $venue): self
+    {
+        if (!$this->venues->contains($venue)) {
+            $this->venues[] = $venue;
+            $venue->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenue(Venue $venue): self
+    {
+        if ($this->venues->contains($venue)) {
+            $this->venues->removeElement($venue);
+            // set the owning side to null (unless already changed)
+            if ($venue->getUser() === $this) {
+                $venue->setUser(null);
             }
         }
 

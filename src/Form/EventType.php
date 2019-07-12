@@ -20,22 +20,9 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateEvent', DateType::class, [
-                'label' => 'date',
-                'format' => 'dd-MM-yyyy',
-                'widget' => 'choice',
-                'required' => true
-            ])
-            ->add('startHour', TimeType::class, [
-                'label' => 'start time',
-                'widget' => 'choice',
-                'required' => false
-            ])
-            ->add('endHour', TimeType::class, [
-                'label' => "end Time",
-                'widget' => 'choice',
-                'required' => false
-            ])
+            ->add('title')
+            ->add('beginAt')
+            ->add('endAt')
             ->add('arrivalHour', TimeType::class, [
                 'label' => "arrival time",
                 'widget' => 'choice',

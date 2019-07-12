@@ -20,20 +20,19 @@ class Event
     private $id;
 
     /**
-     * @ORM\Column(type="date")
-     * @Assert\NotBlank(message="You must give a date to your event")
+     * @ORM\Column(type="string", length=60)
      */
-    private $dateEvent;
+    private $title;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    private $startHour;
+    private $beginAt;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $endHour;
+    private $endAt = null;
 
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -85,38 +84,38 @@ class Event
         return $this->id;
     }
 
-    public function getDateEvent(): ?\DateTimeInterface
+    public function getTitle(): ?string
     {
-        return $this->dateEvent;
+        return $this->title;
     }
 
-    public function setDateEvent(\DateTimeInterface $dateEvent): self
+    public function setTitle(string $title): self
     {
-        $this->dateEvent = $dateEvent;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getStartHour(): ?\DateTimeInterface
+    public function getBeginAt(): ?\DateTimeInterface
     {
-        return $this->startHour;
+        return $this->beginAt;
     }
 
-    public function setStartHour(?\DateTimeInterface $startHour): self
+    public function setBeginAt(?\DateTimeInterface $beginAt): self
     {
-        $this->startHour = $startHour;
+        $this->beginAt = $beginAt;
 
         return $this;
     }
 
-    public function getEndHour(): ?\DateTimeInterface
+    public function getEndAt(): ?\DateTimeInterface
     {
-        return $this->endHour;
+        return $this->endAt;
     }
 
-    public function setEndHour(?\DateTimeInterface $endHour): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
-        $this->endHour = $endHour;
+        $this->endAt = $endAt;
 
         return $this;
     }

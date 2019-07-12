@@ -28,7 +28,8 @@
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.6",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "tattali/calendar-bundle": "^1.1"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

@@ -17,7 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class EventController
  * @package App\Controller
  * @Route("/event")
- *@IsGranted("ROLE_USER")
  */
 class EventController extends AbstractController
 {
@@ -153,4 +152,14 @@ class EventController extends AbstractController
         }
         return $this->redirectToRoute("home_index");
     }
+
+    /**
+     * @Route("/calendar", name="event_calendar", methods={"GET"})
+     */
+    public function calendar(): Response
+    {
+        return $this->render('event/calendar.html.twig');
+    }
+
+
 }

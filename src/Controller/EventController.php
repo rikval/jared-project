@@ -22,10 +22,13 @@ class EventController extends AbstractController
      */
     public function index()
     {
-        $events = $this->getUser()->getEvents();
-        return $this->render('event/index.html.twig', [
-            'events' => $events,
-        ]);
+        if($this->getUser() != null){
+            $events = $this->getUser()->getEvents();
+            return $this->render('event/index.html.twig', [
+                'events' => $events,
+            ]);
+        }
+         return $this->redirectToRoute("security_login");
     }
 
     /**

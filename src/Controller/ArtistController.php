@@ -26,10 +26,13 @@ class ArtistController extends AbstractController
      */
     public function index()
     {
-        $artists = $this->getUser()->getArtist();
-        return $this->render('artist/index.html.twig', [
-            'artists' => $artists,
-        ]);
+        if($this->getUser() != null) {
+            $artists = $this->getUser()->getArtist();
+            return $this->render('artist/index.html.twig', [
+                'artists' => $artists,
+            ]);
+        }
+        return $this->redirectToRoute("security_login");
     }
 
     /**

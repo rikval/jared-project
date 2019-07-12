@@ -27,13 +27,16 @@ class TourController extends AbstractController
      */
     public function index()
     {
-        $permissions = $this->getUser()->getPermissions();
-        foreach($permissions as $p){
-            $tours[] = $p->getTour();
+        if($this->getUser() != null) {
+            $permissions = $this->getUser()->getPermissions();
+            foreach ($permissions as $p) {
+                $tours[] = $p->getTour();
+            }
+            return $this->render('tour/index.html.twig', [
+                'tours' => $tours,
+            ]);
         }
-        return $this->render('tour/index.html.twig', [
-            'tours' => $tours,
-        ]);
+        return $this->redirectToRoute("security_login");
     }
 
     /**

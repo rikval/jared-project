@@ -27,10 +27,13 @@ class VenueController extends AbstractController
      */
     public function index()
     {
-        $venues = $this->getUser()->getVenues();
-        return $this->render('venue/index.html.twig', [
-            'venues' => $venues,
-        ]);
+        if($this->getUser() != null) {
+            $venues = $this->getUser()->getVenues();
+            return $this->render('venue/index.html.twig', [
+                'venues' => $venues,
+            ]);
+        }
+        return $this->redirectToRoute("security_login");
     }
 
     /**

@@ -132,13 +132,13 @@ class DataFixtures extends Fixture
                     $events = [];
                     for($d = 1; $d <= mt_rand(1, 10); $d++){
                         $events[$d] = new Event();
-                        $events[$d]->setDateEvent($faker->dateTimeBetween('-' . $days . ' days'));
+                        $events[$d]->setTitle($faker->word);
                         $events[$d]->setAllowance($faker->numberBetween(50, 400));
                         $events[$d]->setCurrency($faker->currencyCode);
                         $events[$d]->setIsPublic($faker->boolean);
                         $events[$d]->setArrivalHour($faker->dateTimeBetween('-50 days'));
-                        $events[$d]->setStartHour($faker->dateTimeBetween('-50 days'));
-                        $events[$d]->setEndHour($faker->dateTimeBetween('-50 days'));
+                        $events[$d]->setBeginAt($faker->dateTimeBetween('-50 days'));
+                        $events[$d]->setEndAt($faker->dateTimeBetween('-50 days'));
                         $events[$d]->setHasAccommodation($faker->boolean);
                         $events[$d]->setTour($tours[$c]);
                         $events[$d]->setVenue($faker->randomElement($venues));

@@ -15,17 +15,27 @@
             <tr>
                 <th>Name</th>
                 <th>Artist</th>
+                <th>Permission</th>
                 <th colspan="2">Options</th>
             </tr>
         </thead>
         <tbody>
-        {% for tour in tours %}
-            <tr>
-                <td><a href="{{ path('tour_show', {"id" : tour.id}) }}">{{ tour.name }}</a></td>
-                <td><a href="{{ path('artist_show', {"id" : tour.artist.id}) }}">{{ tour.artist.name }}</a></td>
-                <td><a class="btn-info" href="{{ path('tour_edit', {"id" : tour.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('tour_delete', {"id" : tour.id}) }}">Delete</a></td>
-            </tr>
+        {% for t in tours %}
+                <tr>
+                    <td><a href="{{ path('tour_show', {"id" : t.id}) }}">{{ t.tour.name }}</a></td>
+                    <td><a href="{{ path('artist_show', {"id" : t.tour.artist.id}) }}">{{ t.tour.artist.name }}</a></td>
+                    <td>{{ t.permission }}</td>
+                    {% if t.permission == "Administrator" %}
+                    <td>
+                        <a class="btn btn-white btn-link btn-sm" href="{{ path('tour_edit', {"id" : t.id}) }}">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <a class="btn btn-white btn-link btn-sm" href="{{ path('tour_delete', {"id" : t.id}) }}">
+                            <i class="material-icons">close</i>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
         {% endfor %}
         </tbody>
     </table>

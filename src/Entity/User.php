@@ -60,10 +60,6 @@ class User implements UserInterface
      */
     private $artist;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="users")
-     */
-    private $tour;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Contact", mappedBy="user", orphanRemoval=true)
@@ -196,17 +192,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTour(): ?Tour
-    {
-        return $this->tour;
-    }
-
-    public function setTour(?Tour $tour): self
-    {
-        $this->tour = $tour;
-
-        return $this;
-    }
 
     /**
      * Returns the roles granted to the user.

@@ -63,6 +63,8 @@ class ArtistController extends AbstractController
         $form = $this->createForm(ArtistType::class, $artist);
         $form->handleRequest($request);
 
+        $artist->setUser($this->getUser());
+
         if($form->isSubmitted()){
             if($form->isValid()){
 

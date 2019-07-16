@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Permission;
 use App\Entity\Tour;
 use App\Form\TourType;
+use App\Repository\PermissionRepository;
+use App\Repository\TourRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,25 +20,26 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/tour")
  *@IsGranted("ROLE_USER")
  *
- *
  */
 class TourController extends AbstractController
 {
     /**
      * @Route("/", name="tour_index")
      */
-    public function index()
+    public function index(PermissionRepository $permissionRepository, TourRepository $tourRepository)
     {
-        if($this->getUser() != null) {
-            $permissions = $this->getUser()->getPermissions();
-            foreach ($permissions as $p) {
-                $tours[] = $p->getTour();
-            }
-            return $this->render('tour/index.html.twig', [
-                'tours' => $tours,
-            ]);
-        }
-        return $this->redirectToRoute("security_login");
+        $userId = $this->getUser()->getId();
+        $allTours = $tourRepository->findAll();
+        $userTours = $permissionRepository->findBy(
+            [
+                'user' => $userId,
+                'tour' => $allTours
+            ]
+        );
+
+        return $this->render('tour/index.html.twig', [
+            'tours' => $userTours,
+        ]);
     }
 
     /**

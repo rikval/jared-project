@@ -81,6 +81,11 @@ class User implements UserInterface
      */
     private $venues;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $userTag;
+
     public function __construct()
     {
         $this->artist = new ArrayCollection();
@@ -360,6 +365,18 @@ class User implements UserInterface
                 $venue->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserTag(): ?string
+    {
+        return $this->userTag;
+    }
+
+    public function setUserTag(string $userTag): self
+    {
+        $this->userTag = $userTag;
 
         return $this;
     }

@@ -20,7 +20,7 @@ class PermissionType extends AbstractType
             ->add('permission', ChoiceType::class, [
                 'choices' => [
                     "Administrator" => "administrator",
-                    "Contributor" => 'contributor'
+                    "Contributor" => "contributor"
                 ],
             ])
             ->add('user', EntityType::class, [

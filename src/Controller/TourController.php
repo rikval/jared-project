@@ -79,7 +79,7 @@ class TourController extends AbstractController
                 $permission = new Permission();
                 $permission->setUser($this->getUser());
                 $permission->setTour($tour);
-                $permission->setPermission("Administrator");
+                $permission->setPermission("administrator");
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($permission);

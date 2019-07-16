@@ -7,7 +7,12 @@
 
     <a href="{{ path('tour_new') }}"
        class="btn btn-edit">
-        add
+        New Tour
+    </a>
+
+    <a href="{{ path('permission_new') }}"
+       class="btn btn-info">
+        New Contributor
     </a>
 
     <table class="table">
@@ -25,7 +30,7 @@
                     <td><a href="{{ path('tour_show', {"id" : t.id}) }}">{{ t.tour.name }}</a></td>
                     <td><a href="{{ path('artist_show', {"id" : t.tour.artist.id}) }}">{{ t.tour.artist.name }}</a></td>
                     <td>{{ t.permission }}</td>
-                    {% if t.permission == "Administrator" %}
+                    {% if t.permission == "administrator" %}
                     <td>
                         <a class="btn btn-white btn-link btn-sm" href="{{ path('tour_edit', {"id" : t.id}) }}">
                             <i class="material-icons">edit</i>

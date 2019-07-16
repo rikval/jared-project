@@ -34,6 +34,9 @@ class SecurityController extends AbstractController
                 );
 
                 $user->setPassword($password);
+                /*TODO improve and secure userTag*/
+                $tag =  random_int(1000, 9999);
+                $user->setUserTag($user->getNickname() . '#' . $tag);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);

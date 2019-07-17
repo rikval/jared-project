@@ -28,9 +28,14 @@ class Permission
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="permissions")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank(message="You must specify which user you want to give this permission")
      */
     private $user;
+
+    /**
+     * @var string
+     * @Assert\NotBlank(message="Please enter a UserTag")
+     */
+    private $userTag;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tour", inversedBy="permissions")
@@ -65,6 +70,22 @@ class Permission
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserTag(): ?string
+    {
+        return $this->userTag;
+    }/**
+     * @param string $userTag
+     * @return Permission
+     */
+    public function setUserTag(?string $userTag): Permission
+    {
+        $this->userTag = $userTag;
         return $this;
     }
 

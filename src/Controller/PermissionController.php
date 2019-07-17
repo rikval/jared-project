@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Permission;
 use App\Form\PermissionType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +51,7 @@ class PermissionController extends AbstractController
      *
      * @Route("/new", name="permission_new", methods={"GET", "POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserRepository $userRepository): Response
     {
         $permission = new Permission();
         $form = $this->createForm(PermissionType::class, $permission);
@@ -58,14 +59,21 @@ class PermissionController extends AbstractController
 
         if($form->isSubmitted()){
             if($form->isValid()){
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($permission);
-                $entityManager->flush();
 
-                // TODO ajouter un message de validation de création de formulaire
-                return $this->redirectToRoute('permission_index');
+                /*TODO Add validator + improve errors messages*/
+                $user = $userRepository->findOneByUserTag($permission->getUserTag());
+                if (!is_null($user)) {
+                    $permission->setUser($user);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($permission);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'Permission has been created !');
+                    return $this->redirectToRoute('tour_index');
+                }
+                $this->addFlash('error', 'UserTag is not valid');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('permission/new.html.twig', [
             'permission' => $permission,

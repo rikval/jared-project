@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,10 +24,9 @@ class PermissionType extends AbstractType
                     "Contributor" => "contributor"
                 ],
             ])
-            ->add('user', EntityType::class, [
-                'label' => "Chose a user",
-                'class' => User::class,
-                'choice_label' => "nickname"
+            ->add('userTag', TextType::class, [
+                'label' => 'Enter a UserTag',
+                'required' => true
             ])
             ->add('tour', EntityType::class, [
                 'label' => "Chose a tour",

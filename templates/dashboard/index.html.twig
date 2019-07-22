@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <a href="{{ path('tour_index') }}">
+                                <i class="material-icons">map</i>
+                            </a>
+                        </div>
+                        <h3 class="card-title">TOURS</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-warning">info</i>
+                            <a href="{{ path('tour_index') }}" class="warning-link">View more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <a href="{{ path('artist_index') }}">
+                                <i class="material-icons">people</i>
+                            </a>
+                        </div>
+                        <h3 class="card-title">ARTISTS</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-success">info</i>
+                            <a href="{{ path('artist_index') }}" class="success-link">View more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <div class="card-icon">
+                            <a href="{{ path('event_index') }}">
+                                <i class="material-icons">event</i>
+                            </a>
+                        </div>
+                        <h3 class="card-title">EVENTS</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">info</i>
+                            <a href="{{ path('event_index') }}" class="danger-link">View more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <a href="{{ path('venue_index') }}">
+                                <i class="material-icons">local_activity</i>
+                            </a>
+                        </div>
+                        <h3 class="card-title">VENUES</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-info">info</i>
+                            <a href="{{ path('venue_index') }}" class="info-link">View more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

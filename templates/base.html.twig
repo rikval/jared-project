@@ -28,45 +28,15 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="javascript:void(0)">
+                        <a class="nav-link" href="{{ path('dashboard_index') }}">
                             <i class="material-icons">dashboard</i>
-                            <p>Tableau de bord</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('tour_index') }}">
-                            <i class="material-icons">map</i>
-                            <p>Tours</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('artist_index') }}">
-                            <i class="material-icons">people</i>
-                            <p>Artists</p>
+                            <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('contact_index') }}">
                             <i class="material-icons">contacts</i>
                             <p>Contacts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('event_index') }}">
-                            <i class="material-icons">event</i>
-                            <p>Events</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('venue_index') }}">
-                            <i class="material-icons">local_activity</i>
-                            <p>Venues</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('location_index') }}">
-                            <i class="material-icons">location_on</i>
-                            <p>Locations</p>
                         </a>
                     </li>
                     <!-- your sidebar here -->
@@ -78,6 +48,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
+                        {#TODO Custom link#}
                         <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">

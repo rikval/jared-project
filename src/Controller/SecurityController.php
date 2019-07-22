@@ -74,6 +74,7 @@ class SecurityController extends AbstractController
                 'error' => $error
             ]
         );
+        /*TODO redirect after login*/
     }
 
     /**

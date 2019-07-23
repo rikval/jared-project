@@ -4,8 +4,14 @@
 
 {% block body %}
 
-    <h1>Tour - {{ tour.name }}</h1>
+    <h2 class="text-warning">{{ tour.name }}</h2>
+    <h3>{{ tour.artist.name }}</h3>
+    <p>{{ tour.startDate | date('d-m-Y') }} to {{ tour.endDate | date('d-m-Y') }}</p>
 
+    <a href="{{ path('event_new') }}"
+       class="btn btn-danger">
+        Add an event
+    </a>
     <h2>Events</h2>
     <table class="table">
         <thead>
@@ -33,10 +39,5 @@
         </tbody>
     </table>
 
-
-    <a href="{{ path('tour_delete', {'id': tour.id}) }}"
-       class="btn btn-danger">
-        delete
-    </a>
 
 {% endblock %}

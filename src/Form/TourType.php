@@ -17,7 +17,7 @@ class TourType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'tour name',
+                'label' => 'Tour name',
                 'required' => true
             ])
             ->add('artist', EntityType::class, [
@@ -28,13 +28,13 @@ class TourType extends AbstractType
                 'required' => true
             ])
             ->add('startDate', DateType::class, [
-                'label' => "begin date",
-                'widget' => 'choice',
-                'required' => true
+                'label' => "Begin date",
+                'widget' => 'single_text',
+                'required' => true,
             ])
             ->add('endDate', DateType::class, [
-                'label' => "end date",
-                'widget' => "choice",
+                'label' => "End date",
+                'widget' => "single_text",
                 'required' => true
             ]);
     }

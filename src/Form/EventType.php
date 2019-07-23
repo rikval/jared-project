@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use App\Entity\Tour;
 use App\Entity\Venue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,11 @@ class EventType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('tour', EntityType::class, [
+                'class' => Tour::class,
+                'choice_label' => 'name',
+                'label' => 'Select a tour',
+            ])
             ->add('beginAt')
             ->add('endAt')
             ->add('arrivalHour', TimeType::class, [

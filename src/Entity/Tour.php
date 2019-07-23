@@ -30,11 +30,13 @@ class Tour
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Please enter a Begin Date")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Please enter a End date")
      */
     private $endDate;
 
@@ -84,7 +86,7 @@ class Tour
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): self
+    public function setStartDate($startDate): self
     {
         $this->startDate = $startDate;
 
@@ -96,7 +98,7 @@ class Tour
         return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): self
+    public function setEndDate($endDate): self
     {
         $this->endDate = $endDate;
 

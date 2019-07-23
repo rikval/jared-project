@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\PermissionRepository;
+use App\Repository\TourRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,10 +19,24 @@ class DashboardController extends AbstractController
     /**
      * @Route("/", name="dashboard_index")
      */
-    public function index()
+    public function index(PermissionRepository $permissionRepository, TourRepository $tourRepository)
     {
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-        ]);
+        $userId = $this->getUser()->getId();
+        $allTours = $tourRepository->findAll();
+        $userTours = $permissionRepository->findBy(
+            [
+                'user' => $userId,
+                'tour' => $allTours
+            ]
+        );
+
+        if($this->getUser() != null) {
+            $artists = $this->getUser()->getArtist();
+            return $this->render('dashboard/index.html.twig', [
+                'tours' => $userTours,
+                'artists' => $artists,
+            ]);
+        }
+
     }
 }

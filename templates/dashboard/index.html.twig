@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}{{ parent() }} - Dashboard{% endblock %}
 
 {% block body %}
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
@@ -14,17 +14,32 @@
                                 <i class="material-icons">map</i>
                             </a>
                         </div>
-                        <h3 class="card-title">TOURS</h3>
+                        {#<p>
+                            <a href="{{ path('tour_index') }}">
+                                <i class="material-icons text-warning">more_vert</i>
+                            </a>
+                        </p>#}
+                        <h3 class="card-title">
+                            TOURS
+                        </h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-warning">info</i>
-                            <a href="{{ path('tour_index') }}" class="warning-link">View more...</a>
-                        </div>
+                        <table class="table">
+                            <tbody>
+                            {% for t in tours %}
+                                <tr>
+                                    <td><a href="{{ path('tour_show', {"id" : t.id}) }}">{{ t.tour.name }}</a></td>
+                                    <td><a href="{{ path('artist_show', {"id" : t.tour.artist.id}) }}">{{ t.tour.artist.name }}</a></td>
+                                    <td>{{ t.tour.startDate | date('Y-m-d') }}</td>
+                                    <td>{{ t.tour.endDate | date('Y-m-d')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
@@ -35,14 +50,29 @@
                         <h3 class="card-title">ARTISTS</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-success">info</i>
-                            <a href="{{ path('artist_index') }}" class="success-link">View more...</a>
-                        </div>
+                        <table class="table">
+                            <tbody>
+                            {% for artist in artists %}
+                                <tr>
+                                    <td><a href="{{ path('artist_show', {"id" : artist.id}) }}">{{ artist.name }}</a></td>
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('artist_edit', {"id" : artist.id}) }}">
+                                            <i class="material-icons text-success">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('artist_delete', {"id" : artist.id}) }}">
+                                            <i class="material-icons text-success">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-danger card-header-icon">
                         <div class="card-icon">
@@ -60,12 +90,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-12">
                 <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
                             <a href="{{ path('venue_index') }}">
-                                <i class="material-icons">local_activity</i>
+                                <i class="material-icons">location_on</i>
                             </a>
                         </div>
                         <h3 class="card-title">VENUES</h3>
@@ -79,6 +109,6 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-</div>
 {% endblock %}

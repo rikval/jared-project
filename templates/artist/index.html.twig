@@ -3,28 +3,47 @@
 {% block title %}{{ parent() }} - Your artists{% endblock %}
 
 {% block body %}
-    <h1>Artists</h1>
+    <div class="row">
+        <a href="{{ path('artist_new') }}"
+           class="btn btn-success">
+            New Artist
+        </a>
+    </div>
 
-    <a href="{{ path('artist_new') }}"
-       class="btn btn-edit">
-        add
-    </a>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th colspan="2">Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for artist in artists %}
-            <tr>
-                <td><a href="{{ path('artist_show', {"id" : artist.id}) }}">{{ artist.name }}</a></td>
-                <td><a class="btn-info" href="{{ path('artist_edit', {"id" : artist.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('artist_delete', {"id" : artist.id}) }}">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <h4 class="card-title ">Your Artists</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-success">Artist's Name</th>
+                                <th class="text-success">Options </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for artist in artists %}
+                                <tr>
+                                    <td><a href="{{ path('artist_show', {"id" : artist.id}) }}">{{ artist.name }}</a></td>
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('artist_edit', {"id" : artist.id}) }}">
+                                            <i class="material-icons text-success">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('artist_delete', {"id" : artist.id}) }}">
+                                            <i class="material-icons text-success">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

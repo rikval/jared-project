@@ -19,6 +19,17 @@ class TourRepository extends ServiceEntityRepository
         parent::__construct($registry, Tour::class);
     }
 
+//TODO next 3 tours
+
+//    /**
+//     * @param int $limit
+//     * @return Tour[]
+//     */
+//    public function findNextTours(int $limit = 3) : array
+//    {
+//        return $this->findBy([], ['startDate' => 'ASC'], $limit);
+//    }
+
     // /**
     //  * @return Tour[] Returns an array of Tour objects
     //  */

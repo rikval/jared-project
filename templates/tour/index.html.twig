@@ -29,6 +29,8 @@
                             <tr>
                                 <th class="text-warning">Tour's name</th>
                                 <th class="text-warning">Artist</th>
+                                <th class="text-warning">Start Date</th>
+                                <th class="text-warning">End Date</th>
                                 <th class="text-warning">Options </th>
                             </tr>
                         </thead>
@@ -37,6 +39,8 @@
                             <tr>
                                 <td><a href="{{ path('tour_show', {"id" : t.id}) }}">{{ t.tour.name }}</a></td>
                                 <td><a href="{{ path('artist_show', {"id" : t.tour.artist.id}) }}">{{ t.tour.artist.name }}</a></td>
+                                <td>{{ t.tour.startDate | date('Y-m-d')}}</td>
+                                <td>{{ t.tour.endDate | date('Y-m-d') }}</td>
                                 {% if t.permission == "administrator" %}
                                 <td>
                                     <a class="btn btn-white btn-link btn-sm" href="{{ path('tour_edit', {"id" : t.id}) }}">

@@ -119,9 +119,6 @@ class DataFixtures extends Fixture
                         $location->setCountry($faker->country);
                         $location->setStreetName($faker->streetName);
                         $location->setStreetNumber($faker->randomNumber());
-                        $location->setZip($faker->postcode);
-                        $location->setLatitude($faker->latitude);
-                        $location->setLongitude($faker->longitude);
 
                         $venues[$e]->setLocation($location);
 

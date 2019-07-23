@@ -25,7 +25,7 @@
                 <td><a href="{{ path('venue_show', {"id" : venue.id}) }}">{{ venue.name }}</a></td>
                 <td>{{ venue.audienceCapacity }}</td>
                 <td>{{ venue.location.streetNumber }}.{{ venue.location.streetName }} {{ venue.location.City }}
-                    {{ venue.location.country }} {{ venue.location.zip }}
+                    {{ venue.location.country }}
                 </td>
                 <td><a class="btn-info" href="{{ path('venue_edit', {"id" : venue.id}) }}">Edit</a></td>
                 <td><a class="btn-danger" href="{{ path('venue_delete', {"id" : venue.id}) }}">Delete</a></td>

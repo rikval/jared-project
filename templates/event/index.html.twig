@@ -3,43 +3,58 @@
 {% block title %}{{ parent() }} - Your events{% endblock %}
 
 {% block body %}
-    <h1>Events</h1>
 
-    <a href="{{ path('event_new') }}"
-       class="btn btn-edit">
-        add
-    </a>
+    <div class="row">
+        <a href="{{ path('event_new') }}"
+           class="btn btn-danger">
+            New Event
+        </a>
+        <a href="{{ path('event_calendar') }}"
+           class="btn btn-secondary">
+            Calendar
+        </a>
+    </div>
 
-    <a href="{{ path('event_calendar') }}"
-       class="btn btn-primary">
-        Calendar
-    </a>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Venue</th>
-            <th>Allowance</th>
-            <th>Accommodation</th>
-            <th>Is public</th>
-            <th colspan="2">Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.title }}</a></td>
-                <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
-                <td>{{ event.allowance }} {{ event.currency }}</td>
-                <td>{{ event.hasAccommodation }}</td>
-                <td>{{ event.isPublic }}</td>
-                <td><a class="btn-info" href="{{ path('event_edit', {"id" : event.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('event_delete', {"id" : event.id}) }}">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title ">Your Venues</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-danger">Title</th>
+                                <th class="text-danger">Venue</th>
+                                <th class="text-danger">Allowance</th>
+                                <th class="text-danger">Options </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.title }}</a></td>
+                                    <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
+                                    <td>{{ event.allowance }} {{ event.currency }}</td>
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('event_edit', {"id" : event.id}) }}">
+                                            <i class="material-icons text-danger">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('event_delete', {"id" : event.id}) }}">
+                                            <i class="material-icons text-danger">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

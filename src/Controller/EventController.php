@@ -72,10 +72,10 @@ class EventController extends AbstractController
                 $entityManager->persist($event);
                 $entityManager->flush();
 
-                // TODO ajouter un message de validation de création de formulaire
+                $this->addFlash('success', 'Event has been created !');
                 return $this->redirectToRoute('event_index');
             }
-            //TODO ajouter un message d'erreur de formulaire non valide
+            $this->addFlash('error', 'The form contains errors');
         }
         return $this->render('event/new.html.twig', [
             'event' => $event,
@@ -100,12 +100,12 @@ class EventController extends AbstractController
                 if ($form->isValid()) {
                     $this->getDoctrine()->getManager()->flush();
 
-                    //TODO ajouter un message de validation d'edition
+                    $this->addFlash('success', 'Event has been edited !');
                     return $this->redirectToRoute('event_show', [
                         'id' => $event->getId()
                     ]);
                 }
-                //TODO ajouter un message d'erreur de formulaire non valide
+                $this->addFlash('error', 'The form contains errors');
             }
             return $this->render('event/edit.html.twig', [
                 'event' => $event,
@@ -129,7 +129,7 @@ class EventController extends AbstractController
             $entityManager->remove($event);
             $entityManager->flush();
 
-            //TODO ajouter un message de confirmation de suppression
+            $this->addFlash('success', 'Event has been deleted !');
             return $this->redirectToRoute('event_index');
         }
         return $this->redirectToRoute("home_index");

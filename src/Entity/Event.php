@@ -32,11 +32,14 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank(message="Please enter a Title")
+     * @Assert\Length(max="50", maxMessage="Event's title must be at most {{ limit }} characters")
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Please enter a start hour")
      */
     private $beginAt;
 
@@ -46,7 +49,7 @@ class Event
     private $endAt = null;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $arrivalHour;
 
@@ -58,18 +61,18 @@ class Event
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $currency;
+    private $currency = '€';
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $hasAccommodation;
+    private $hasAccommodation = true;
 
     /**
      * @ORM\Column(type="boolean")
      *
      */
-    private $isPublic = false;
+    private $isPublic = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event")

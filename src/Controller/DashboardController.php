@@ -41,10 +41,12 @@ class DashboardController extends AbstractController
             );
             $artists = $this->getUser()->getArtist();
             $venues = $this->getUser()->getVenues();
+            $events = $this->getUser()->getEvents();
             return $this->render('dashboard/index.html.twig', [
                 'tours' => $userTours,
                 'artists' => $artists,
-                'venues' => $venues
+                'venues' => $venues,
+                'events' => $events
             ]);
         }
         return $this->redirectToRoute("security_login");

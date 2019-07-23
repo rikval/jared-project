@@ -83,10 +83,25 @@
                         <h3 class="card-title">EVENTS</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-danger">info</i>
-                            <a href="{{ path('event_index') }}" class="danger-link">View more...</a>
-                        </div>
+                        <table class="table">
+                            <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.title }}</a></td>
+                                    <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
+                                    <td>{{ event.allowance }} {{ event.currency }}</td>
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('event_edit', {"id" : event.id}) }}">
+                                            <i class="material-icons text-danger">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('event_delete', {"id" : event.id}) }}">
+                                            <i class="material-icons text-danger">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -119,6 +134,6 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
 {% endblock %}

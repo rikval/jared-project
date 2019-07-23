@@ -9,10 +9,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,24 +20,45 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('title', TextType::class, [
+                'label' => 'Title',
+                'required' => true
+            ])
+            /*TODO User tour*/
             ->add('tour', EntityType::class, [
                 'class' => Tour::class,
                 'choice_label' => 'name',
-                'label' => 'Select a tour',
+                'label' => 'Tour',
+                'placeholder' => 'Select a tour',
+                'required' => true
             ])
-            ->add('beginAt')
-            ->add('endAt')
-            ->add('arrivalHour', TimeType::class, [
-                'label' => "arrival time",
-                'widget' => 'choice',
+            /*TODO User Venue*/
+            ->add('venue', EntityType::class, [
+                'class' => Venue::class,
+                'choice_label' => "name",
+                'label' => "Venue",
+                'placeholder' => 'Select a venue',
+                'required' => false,
+            ])
+            ->add('beginAt', DateTimeType::class, [
+                'label' => "Start Hour",
+                'required' => true,
+            ])
+            ->add('endAt', DateTimeType::class, [
+                'label' => "End Hour",
+                'required' => true,
+            ])
+            /*->add('arrivalHour', DateTimeType::class, [
+                'label' => "Arrival time",
                 'required' => false
-            ])
+            ])*/
             ->add('allowance', IntegerType::class, [
-                'label' => "allowance",
+                'label' => "Allowance",
                 'required' => false
             ])
-            ->add('currency', CurrencyType::class, [
+            /*TODO Evol
+             *
+             * ->add('currency', CurrencyType::class, [
                 'label' => "currency",
                 'required' => false
             ])
@@ -49,13 +69,8 @@ class EventType extends AbstractType
             ->add('isPublic', CheckboxType::class, [
                 'label' => "do you want to give a public visibility to this event  ?",
                 'required' => false
-            ])
-            ->add('venue', EntityType::class, [
-                'class' => Venue::class,
-                'label' => "venue",
-                'choice_label' => "name",
-                'required' => false
-            ])
+            ])*/
+
         ;
     }
 

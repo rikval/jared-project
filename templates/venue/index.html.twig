@@ -3,34 +3,56 @@
 {% block title %}{{ parent() }} - Your venues{% endblock %}
 
 {% block body %}
-    <h1>Venues</h1>
+    <div class="row">
+        <a href="{{ path('venue_new') }}"
+           class="btn btn-info">
+            New Venue
+        </a>
+    </div>
 
-    <a href="{{ path('venue_new') }}"
-       class="btn btn-edit">
-        add
-    </a>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Audience capacity</th>
-            <th>Adress</th>
-            <th colspan="2">Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for venue in venues %}
-            <tr>
-                <td><a href="{{ path('venue_show', {"id" : venue.id}) }}">{{ venue.name }}</a></td>
-                <td>{{ venue.audienceCapacity }}</td>
-                <td>{{ venue.location.streetNumber }}.{{ venue.location.streetName }} {{ venue.location.City }}
-                    {{ venue.location.country }} {{ venue.location.zip }}
-                </td>
-                <td><a class="btn-info" href="{{ path('venue_edit', {"id" : venue.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('venue_delete', {"id" : venue.id}) }}">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title ">Your Venues</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-info">Venue's Name</th>
+                                <th class="text-info">Adress</th>
+                                <th class="text-info">Audience capacity
+                                <th class="text-info">Note</th>
+                                <th class="text-info">Options </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for venue in venues %}
+                                <tr>
+                                    <td><a href="{{ path('venue_show', {"id" : venue.id}) }}">{{ venue.name }}</a></td>
+                                    <td>{{ venue.location.streetNumber }}, {{ venue.location.streetName }}
+                                        - {{ venue.location.City }}
+                                        - {{ venue.location.country }}
+                                    </td>
+                                    <td>{{ venue.audienceCapacity }}</td>
+                                    <td>{{ venue.note }}</td>
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('venue_edit', {"id" : venue.id}) }}">
+                                            <i class="material-icons text-info">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('venue_delete', {"id" : venue.id}) }}">
+                                            <i class="material-icons text-info">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

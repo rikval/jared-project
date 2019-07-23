@@ -31,12 +31,23 @@ class DashboardController extends AbstractController
         );
 
         if($this->getUser() != null) {
+            $userId = $this->getUser()->getId();
+            $allTours = $tourRepository->findAll();
+            $userTours = $permissionRepository->findBy(
+                [
+                    'user' => $userId,
+                    'tour' => $allTours
+                ]
+            );
             $artists = $this->getUser()->getArtist();
+            $venues = $this->getUser()->getVenues();
             return $this->render('dashboard/index.html.twig', [
                 'tours' => $userTours,
                 'artists' => $artists,
+                'venues' => $venues
             ]);
         }
+        return $this->redirectToRoute("security_login");
 
     }
 }

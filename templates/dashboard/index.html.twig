@@ -101,10 +101,20 @@
                         <h3 class="card-title">VENUES</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-info">info</i>
-                            <a href="{{ path('venue_index') }}" class="info-link">View more...</a>
-                        </div>
+                        <table class="table">
+                            <tbody>
+                            {% for venue in venues %}
+                                <tr>
+                                    <td><a href="{{ path('venue_show', {"id" : venue.id}) }}">{{ venue.name }}</a></td>
+                                    <td>{{ venue.location.streetNumber }}, {{ venue.location.streetName }}
+                                        - {{ venue.location.City }}
+                                        - {{ venue.location.country }}
+                                    </td>
+                                    <td>{{ venue.audienceCapacity }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,6 @@ class ContactFactoryTest extends TestCase
      */
     private $factory;
 
-
     /**
      * PHPUnit magic.If you have a method that's exactly called setUp ,
      * PHPUnit will automatically call it before each test.

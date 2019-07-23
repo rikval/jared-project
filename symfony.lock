@@ -137,6 +137,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "liip/functional-test-bundle": {
+        "version": "3.1.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

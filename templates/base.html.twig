@@ -118,7 +118,7 @@
                                     <a class="dropdown-item" href="{{ path('security_login') }}">Sign in</a>
                                     <a class="dropdown-item" href="{{ path('security_register') }}">Register</a>
                                     {% else %}
-                                    <a class="dropdown-item" href="{{ path('user_show', {'id': app.user.id}) }}">My profile</a>
+                                    <a class="dropdown-item user-is-log" href="{{ path('user_show', {'id': app.user.id}) }}">My profile</a>
                                     <a class="dropdown-item" href="{{ path('security_logout') }}">Sign out</a>
                                     {% endif %}
                                 </div>

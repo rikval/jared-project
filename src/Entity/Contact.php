@@ -74,14 +74,11 @@ class Contact
     private $relations;
 
     /**
-     * @ORM\Column(type="string", length=40, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="contacts",  cascade={"persist"})
      */
-    private $reach;
+    private $location;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $area;
+
 
     public function __construct()
     {
@@ -235,26 +232,14 @@ class Contact
         return $this;
     }
 
-    public function getReach(): ?string
+    public function getLocation(): ?Location
     {
-        return $this->reach;
+        return $this->location;
     }
 
-    public function setReach(?string $reach): self
+    public function setLocation(?Location $location): self
     {
-        $this->reach = $reach;
-
-        return $this;
-    }
-
-    public function getArea(): ?string
-    {
-        return $this->area;
-    }
-
-    public function setArea(?string $area): self
-    {
-        $this->area = $area;
+        $this->location = $location;
 
         return $this;
     }

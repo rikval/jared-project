@@ -29,9 +29,11 @@ class ContactController extends AbstractController
     public function index()
     {
         if($this->getUser() != null) {
+            $artists = $this->getUser()->getArtists();
             $contacts = $this->getUser()->getContact();
             return $this->render('contact/index.html.twig', [
                 'contacts' => $contacts,
+                'artists' => $artists,
             ]);
         }
         return $this->redirectToRoute("security_login");

@@ -14,6 +14,7 @@
             <th>Phone</th>
             <th>Website</th>
             <th>Language</th>
+            <th>Location</th>
             <th>Note</th>
             <th colspan="2">Options</th>
         </tr>
@@ -25,6 +26,7 @@
                 <td>{{ contact.phone }}</td>
                 <td>{{ contact.website }}</td>
                 <td>{{ contact.language }}</td>
+                <td>{{ contact.location.city }} - {{ contact.location.country }}</td>
                 <td>{{ contact.note }}</td>
                 <td><a class="btn-info" href="{{ path('contact_edit', {"id" : contact.id}) }}">Edit</a></td>
                 <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : contact.id}) }}">Delete</a></td>

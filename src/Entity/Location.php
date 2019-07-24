@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -47,27 +49,22 @@ class Location
      */
     private $country;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $longitude;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $latitude;
-
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"locations:read"})
-     */
-    private $zip;
 
     /**
      * @ORM\joinColumn(onDelete="SET NULL")
      * @ORM\OneToOne(targetEntity="App\Entity\Venue", cascade={"persist", "remove"})
      */
     private $venue;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contact", mappedBy="location")
+     */
+    private $contacts;
+
+    public function __construct()
+    {
+        $this->contacts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,42 +119,6 @@ class Location
         return $this;
     }
 
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(?float $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(?float $latitude): self
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    public function getZip(): ?string
-    {
-        return $this->zip;
-    }
-
-    public function setZip(?string $zip): self
-    {
-        $this->zip = $zip;
-
-        return $this;
-    }
-
     public function getVenue(): ?Venue
     {
         return $this->venue;
@@ -166,6 +127,37 @@ class Location
     public function setVenue(?Venue $venue): self
     {
         $this->venue = $venue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contact[]
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts[] = $contact;
+            $contact->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->contains($contact)) {
+            $this->contacts->removeElement($contact);
+            // set the owning side to null (unless already changed)
+            if ($contact->getLocation() === $this) {
+                $contact->setLocation(null);
+            }
+        }
 
         return $this;
     }

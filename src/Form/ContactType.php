@@ -43,22 +43,12 @@ class ContactType extends AbstractType
                 'label' => "Language",
                 'required' => false
             ])
-            ->add('reach', ChoiceType::class, [
-                'label' => "Reach",
-                'choices' => [
-                    'National' => 'national',
-                    'Regional' => 'regional',
-                    'Local' =>  'local'
-                ],
-                'required' => false
-            ])
-            ->add('area', CountryType::class, [
-                'label' => "Country",
-                'required' => false
-            ])
             ->add('note', TextareaType::class, [
                 'label' => "Note",
                 'required' => false
+            ])
+            ->add('location', LocationType::class, [
+                'label' => false
             ])
 
         ;

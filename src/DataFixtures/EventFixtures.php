@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\DataFixtures;
 
 use App\Entity\Artist;
@@ -17,7 +18,7 @@ use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-class DataFixtures extends Fixture
+class EventFixtures extends Fixture
 {
     public $passwordEncoder;
 
@@ -32,7 +33,7 @@ class DataFixtures extends Fixture
 
         // Creating user fixtures
         $users = [];
-        for($a = 1; $a <= 10; $a++){
+        for ($a = 1; $a <= 1; $a++) {
             $users[$a] = new User();
             $randomNickname = $faker->firstName;
             $users[$a]->setNickname($randomNickname);
@@ -48,7 +49,7 @@ class DataFixtures extends Fixture
 
             // Creating contacts fixtures
             $contacts = [];
-            for($f = 1; $f <= mt_rand(20, 100); $f++){
+            for ($f = 1; $f <= mt_rand(20, 100); $f++) {
                 $contacts[$f] = new Contact();
                 $contacts[$f]->setName($faker->firstName());
                 $contacts[$f]->setEmail($faker->email);
@@ -62,7 +63,7 @@ class DataFixtures extends Fixture
 
             // Creating artists fixtures
             $artists = [];
-            for($b = 1; $b <= mt_rand(1, 5); $b++){
+            for ($b = 1; $b <= mt_rand(1, 5); $b++) {
                 $artists[$b] = new Artist();
                 $artists[$b]->setName($faker->domainWord);
                 $artists[$b]->setUser($users[$a]);
@@ -72,7 +73,7 @@ class DataFixtures extends Fixture
                 // Creating relation fixtures
                 $affinity = ["Like", "Doesn't like"];
                 $relations = [];
-                for($g = 1; $g <= mt_rand(0, 20); $g++){
+                for ($g = 1; $g <= mt_rand(0, 20); $g++) {
                     $relations[$g] = new Relation();
                     $relations[$g]->setArtist($faker->randomElement($artists));
                     $relations[$g]->setContact($faker->randomElement($contacts));
@@ -85,7 +86,7 @@ class DataFixtures extends Fixture
 
                 // Creating tour fixtures
                 $tours = [];
-                for($c = 1; $c <= mt_rand(0, 3); $c++){
+                for ($c = 1; $c <= mt_rand(0, 3); $c++) {
                     $tours[$c] = new Tour();
                     $tours[$c]->setName($artistName . "Tour" . $c);
                     $tours[$c]->setArtist($artists[$b]);
@@ -106,7 +107,7 @@ class DataFixtures extends Fixture
 
                     // Creating venue fixtures
                     $venues = [];
-                    for($e = 1; $e <= mt_rand(4, 50); $e++) {
+                    for ($e = 1; $e <= mt_rand(4, 50); $e++) {
                         $venues[$e] = new Venue();
                         $venues[$e]->setName($faker->word);
                         $venues[$e]->setUser($users[$a]);
@@ -126,14 +127,14 @@ class DataFixtures extends Fixture
                         $manager->persist($location);
 
                     }
-                        // Creating event fixtures
+                    // Creating event fixtures
                     $events = [];
-                    for($d = 1; $d <= mt_rand(1, 10); $d++){
+                    for ($d = 1; $d <= 3; $d++) {
                         $events[$d] = new Event();
                         $events[$d]->setTitle($faker->word);
                         $events[$d]->setAllowance($faker->numberBetween(50, 400));
                         $events[$d]->setCurrency($faker->currencyCode);
-                        $events[$d]->setIsPublic($faker->boolean);
+                        $events[$d]->setIsPublic(true);
                         $events[$d]->setArrivalHour($faker->dateTimeBetween('-50 days'));
                         $events[$d]->setBeginAt($faker->dateTimeBetween('-50 days'));
                         $events[$d]->setEndAt($faker->dateTimeBetween('-50 days'));

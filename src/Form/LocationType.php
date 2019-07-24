@@ -36,22 +36,7 @@ class LocationType extends AbstractType
                     'required'=> false
                 ]
             )
-            /*TODO Evol google api*/
-            /*->add('longitude', NumberType::class, [
-                    'label' => 'longitude',
-                    'required' => false
-                ]
-            )
-            ->add('latitude', NumberType::class, [
-                    'label' => 'latitude',
-                    'required' => false
-                ]
-            )
-            ->add('zip', TextType::class, [
-                    'label' => 'ZIP',
-                    'required' => false
-                ]
-            )*/
+
         ;
     }
 

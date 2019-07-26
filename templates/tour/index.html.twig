@@ -41,7 +41,7 @@
                                 <td><a href="{{ path('artist_show', {"id" : t.tour.artist.id}) }}">{{ t.tour.artist.name }}</a></td>
                                 <td>{{ t.tour.startDate | date('Y-m-d')}}</td>
                                 <td>{{ t.tour.endDate | date('Y-m-d') }}</td>
-                                {% if t.permission == "administrator" %}
+                                {% if t.permission == "Administrator" %}
                                 <td>
                                     <a class="btn btn-white btn-link btn-sm" href="{{ path('tour_edit', {"id" : t.id}) }}">
                                         <i class="material-icons text-warning">edit</i>

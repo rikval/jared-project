@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - edit: {{ contact.name }} {% endblock %}
+{% block title %}{{ parent() }} - {{ contact.name }} {% endblock %}
 
 {% block body %}
     <h1>Edit {{ contact.name }}</h1>
@@ -21,7 +21,7 @@
 
     <div class="text-right">
         <button type="submit" class="btn btn-primary">
-            edit
+            Edit Contact
         </button>
     </div>
     {{  form_end(form) }}

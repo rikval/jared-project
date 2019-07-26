@@ -3,40 +3,59 @@
 {% block title %}{{ parent() }} - Your contacts{% endblock %}
 
 {% block body %}
-    <h1>Contacts</h1>
+    <div class="row">
+        <a href="{{ path('contact_new') }}"
+           class="btn btn-primary">
+            New Contact
+        </a>
+    </div>
 
-    <a href="{{ path('contact_new') }}"
-       class="btn btn-edit">
-        add
-    </a>
-
-    <table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Website</th>
-        <th>Language</th>
-        <th>Location</th>
-        <th>Note</th>
-        <th colspan="2">Options</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for contact in contacts %}
-        <tr>
-            <td><a href="{{ path('contact_show', {"id" : contact.id}) }}">{{ contact.name }}</a></td>
-            <td>{{ contact.email }}</td>
-            <td>{{ contact.phone }}</td>
-            <td>{{ contact.website }}</td>
-            <td>{{ contact.language }}</td>
-            <td>{{ contact.location.city }} - {{ contact.location.country }}</td>
-            <td>{{ contact.note }}</td>
-            <td><a class="btn-info" href="{{ path('contact_edit', {"id" : contact.id}) }}">Edit</a></td>
-            <td><a class="btn-danger" href="{{ path('contact_delete', {"id" : contact.id}) }}">Delete</a></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Your Contacts</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-primary">Name</th>
+                                <th class="text-primary">Email</th>
+                                <th class="text-primary">Phone</th>
+                                <th class="text-primary">Website</th>
+                                <th class="text-primary">Language</th>
+                                <th class="text-primary">Location</th>
+                                {#<th class="text-primary">Note</th>#}
+                                <th class="text-primary">Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for contact in contacts %}
+                                <tr>
+                                    <td><a href="{{ path('contact_show', {"id" : contact.id}) }}">{{ contact.name }}</a></td>
+                                    <td>{{ contact.email }}</td>
+                                    <td>{{ contact.phone }}</td>
+                                    <td>{{ contact.website }}</td>
+                                    <td>{{ contact.language }}</td>
+                                    <td>{{ contact.location.city }} - {{ contact.location.country }}</td>
+                                    {#<td>{{ contact.note }}</td>#}
+                                    <td>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('contact_edit', {"id" : contact.id}) }}">
+                                            <i class="material-icons text-primary">edit</i>
+                                        </a>
+                                        <a class="btn btn-white btn-link btn-sm" href="{{ path('contact_delete', {"id" : contact.id}) }}">
+                                            <i class="material-icons text-primary">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

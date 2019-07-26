@@ -75,7 +75,7 @@ class Event
     private $isPublic = true;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Venue", inversedBy="event",  cascade={"remove"})
      * @Groups({"events:read"})
      */
     private $venue;

@@ -10,11 +10,22 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
+
 
 class TourType extends AbstractType
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $user = $this->security->getUser();
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Tour name',
@@ -25,7 +36,8 @@ class TourType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Artist',
                 'placeholder' => 'Choose an artist',
-                'required' => true
+                'required' => true,
+                'choices' => $user->getArtist()
             ])
             ->add('startDate', DateType::class, [
                 'label' => "Begin date",

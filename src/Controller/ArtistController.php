@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Entity\User;
 use App\Form\ArtistType;
 use App\Repository\ArtistRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -134,4 +136,24 @@ class ArtistController extends AbstractController
         }
         return $this->redirectToRoute("home_index");
     }
+
+    //TODO delete if no use
+//    /**
+//     * @Route("/api/artist", name="api_artist_form", methods={"POST"})
+//     * @param Request $request
+//     * @return JsonResponse
+//     */
+//    public function tourFormData(Request $request)
+//    {
+//        $data = [];
+//        if(null !== $request->get('userId')){
+//            $userRepository = $this->getDoctrine()->getRepository(User::class);
+//            $user = $userRepository->find($request->get('userId'));
+//            $artists = $user->getArtist();
+//            foreach ($artists as $a){
+//                $data[$a->getId()] = $t->getName();
+//            }
+//        }
+//        return new JsonResponse($data);
+//    }
 }

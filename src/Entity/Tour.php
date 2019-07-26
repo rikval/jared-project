@@ -62,6 +62,7 @@ class Tour
     {
         $this->permissions = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->setStartDate(new \DateTime('now'));
     }
 
     public function getId(): ?int

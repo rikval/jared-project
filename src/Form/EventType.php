@@ -35,7 +35,6 @@ class EventType extends AbstractType
                 'label' => 'Title',
                 'required' => true
             ])
-            /*TODO User tour*/
             ->add('tour', EntityType::class, [
                 'class' => Tour::class,
                 'choice_label' => 'name',
@@ -44,7 +43,6 @@ class EventType extends AbstractType
                 'required' => true,
                 'choices' => $this->tourRepository->findUserTours($user)
             ])
-            /*TODO User Venue*/
             ->add('venue', EntityType::class, [
                 'class' => Venue::class,
                 'choice_label' => "name",
@@ -55,10 +53,12 @@ class EventType extends AbstractType
             ])
             ->add('beginAt', DateTimeType::class, [
                 'label' => "Start Hour",
+                'widget' => 'single_text',
                 'required' => true,
             ])
             ->add('endAt', DateTimeType::class, [
                 'label' => "End Hour",
+                'widget' => 'single_text',
                 'required' => true,
             ])
             /*->add('arrivalHour', DateTimeType::class, [

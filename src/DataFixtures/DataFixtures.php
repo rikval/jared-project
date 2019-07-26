@@ -38,6 +38,8 @@ class DataFixtures extends Fixture
             $users[$a]->setNickname($randomNickname);
             $users[$a]->setEmail($randomNickname . "@mail.com");
             $users[$a]->setPlainPassword("admin");
+            $tag =  random_int(1000, 9999);
+            $users[$a]->setUserTag($users[$a]->getNickname() . '#' . $tag);
             $pass = $this->passwordEncoder->encodePassword(
                 $users[$a],
                 $users[$a]->getPlainPassword()
@@ -57,14 +59,23 @@ class DataFixtures extends Fixture
                 $contacts[$f]->setWebsite($faker->domainName);
                 $contacts[$f]->setUser($users[$a]);
 
+                // Creating location fixtures
+                $location = new Location();
+                $location->addContact($contacts[$f]);
+                $location->setCity($faker->city);
+                $location->setCountry($faker->country);
+                $location->setStreetName($faker->streetName);
+                $location->setStreetNumber($faker->randomNumber());
+
                 $manager->persist($contacts[$f]);
+                $manager->persist($location);
             }
 
             // Creating artists fixtures
             $artists = [];
             for($b = 1; $b <= mt_rand(1, 5); $b++){
                 $artists[$b] = new Artist();
-                $artists[$b]->setName($faker->domainWord);
+                $artists[$b]->setName($faker->name);
                 $artists[$b]->setUser($users[$a]);
 
                 $manager->persist($artists[$b]);
@@ -108,7 +119,7 @@ class DataFixtures extends Fixture
                     $venues = [];
                     for($e = 1; $e <= mt_rand(4, 50); $e++) {
                         $venues[$e] = new Venue();
-                        $venues[$e]->setName($faker->word);
+                        $venues[$e]->setName($faker->lastName . " Bar");
                         $venues[$e]->setUser($users[$a]);
                         $venues[$e]->setAudienceCapacity($faker->numberBetween(30, 500));
 

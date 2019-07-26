@@ -8,7 +8,7 @@ $(function () {
                 console.log(data);
                 // $concerts.append('<td>date: '+ event.venue.name +' </td>')
                 $concerts.append('<div class="card col-4" style="width: 18rem;">' +
-                    '<img class="card-img-top" src="https://fakeimg.pl/286x180/" alt="Card image cap">' +
+                    '<img class="card-img-top" src="https://source.unsplash.com/random/286x180" alt="Card image cap">' +
                     '<div class="card-body">' +
                     '<h5 class="card-title">' + event.venue.name + '</h5>' +
                     '<p class="card-text">' + event.dateEvent + '</p>' +

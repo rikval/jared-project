@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Permission;
 use App\Entity\Tour;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,18 @@ class TourRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Tour::class);
+    }
+
+    public function findUserTours(User $user)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->join('t.permissions', 'tp' )
+            ->join('tp.user', 'tpu' )
+            ->andWhere('tpu.id = :user')
+            ->setParameter(':user', $user);
+
+
+        return $qb->getQuery()->getResult();
     }
 
 //TODO next 3 tours

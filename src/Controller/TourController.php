@@ -7,6 +7,7 @@ use App\Entity\Tour;
 use App\Form\TourType;
 use App\Repository\PermissionRepository;
 use App\Repository\TourRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +76,7 @@ class TourController extends AbstractController
 
         if($form->isSubmitted()){
             if($form->isValid()){
+
 
                 $permission = new Permission();
                 $permission->setUser($this->getUser());
@@ -149,4 +151,6 @@ class TourController extends AbstractController
         }
         return $this->redirectToRoute("home_index");
     }
+
+
 }

@@ -43,7 +43,8 @@ class Venue
     private $note;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="venue")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="venue", cascade={"remove"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $event;
 

@@ -26,20 +26,20 @@
                 </a>
             </div>
             <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item active">
+                <ul class="nav active">
+                    <li class="nav-item {% if app.request.get('_route') == 'dashboard_index' %}active{% endif %}">
                         <a class="nav-link" href="{{ path('dashboard_index') }}">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="nav-item {% if app.request.get('_route') == 'event_calendar' %}active{% endif %}">
                         <a class="nav-link" href="{{ path('event_calendar') }}">
                             <i class="material-icons">calendar_today</i>
                             <p>Calendar</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if app.request.get('_route') == 'contact_index' %}active{% endif %}">
                         <a class="nav-link" href="{{ path('contact_index') }}">
                             <i class="material-icons">contacts</i>
                             <p>Contacts</p>
@@ -180,7 +180,7 @@
                             },
                         ],
                         header: {
-                            left: 'prev,next today',
+                            left: 'prevYear prev,next nextYear today',
                             center: 'title',
                             right: 'dayGridMonth,timeGridWeek,timeGridDay',
                         },

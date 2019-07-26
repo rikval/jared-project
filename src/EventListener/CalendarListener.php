@@ -7,43 +7,47 @@ use App\Repository\EventRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use CalendarBundle\Entity\Event as Ev;
 use CalendarBundle\Event\CalendarEvent;
+use Symfony\Component\Security\Core\Security;
 
 class CalendarListener
 {
     private $eventRepository;
     private $router;
+    private $security;
 
     public function __construct(
         EventRepository $eventRepository,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        Security $security
     ) {
         $this->eventRepository = $eventRepository;
         $this->router = $router;
+        $this->security = $security;
     }
 
     public function load(CalendarEvent $calendar): void
     {
         $start = $calendar->getStart();
         $end = $calendar->getEnd();
-        $filters = $calendar->getFilters();
+        $user = $this->security->getUser();
 
-        // Modify the query to fit to your entity and needs
-        // Change booking.beginAt by your start date property
         $events = $this->eventRepository
             ->createQueryBuilder('event')
-            ->where('event.beginAt BETWEEN :start and :end')
+            ->innerJoin('event.users', 'eventUser')
+            ->andWhere('eventUser.id = :user')
+            ->andWhere('event.beginAt BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult()
         ;
 
         foreach ($events as $event) {
-            // this create the events with your data (here booking data) to fill calendar
             $eventEv = new Ev(
                 $event->getTitle(),
                 $event->getBeginAt(),
-                $event->getEndAt() // If the end date is null or not defined, a all day event is created.
+                $event->getEndAt()
             );
 
             /*
@@ -64,7 +68,6 @@ class CalendarListener
                 ])
             );
 
-            // finally, add the event to the CalendarEvent to fill the calendar
             $calendar->addEvent($eventEv);
         }
     }

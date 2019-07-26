@@ -8,8 +8,6 @@
     <h3>{{ tour.artist.name }}</h3>
     <p>{{ tour.startDate | date('d-m-Y') }} to {{ tour.endDate | date('d-m-Y') }}</p>
 
-    {{ form_start(search_form) }}
-    {{ form_end(search_form) }}
 
     <a href="{{ path('event_new') }}"
        class="btn btn-danger">

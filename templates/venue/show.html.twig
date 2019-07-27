@@ -4,11 +4,22 @@
 
 {% block body %}
 
-    <h1>{{ venue.name }}</h1>
+    <h1 class="text-info">{{ venue.name }}</h1>
+    <h4 class="text-gray">Audience Capacity : <span class="text-info">{{ venue.audienceCapacity }}</span></h4>
+    <h4 class="text-info">Location : </h4>
+    <p class="text-gray">{{ venue.location.streetNumber}}, {{ venue.location.streetName}}</p>
+    <p class="text-gray" >{{ venue.location.city}}</p>
+    <p class="text-gray" >{{ venue.location.country}}</p>
 
+    {#TODO Map#}
+
+    <a href="{{ path('venue_edit', {'id': venue.id}) }}"
+       class="btn btn-info">
+        Edit Venue
+    </a>
     <a href="{{ path('venue_delete', {'id': venue.id}) }}"
-       class="btn btn-danger">
-        delete
+       class="btn btn-secondary">
+        Delete Venue
     </a>
 
 {% endblock %}

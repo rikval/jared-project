@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Add venue{% endblock %}
+{% block title %}{{ parent() }} - Add a venue{% endblock %}
 
 {% block body %}
-    <h1>add a venue</h1>
+    <h2 class="text-info">Add a venue</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
@@ -12,8 +12,8 @@
     {{ form_row(form.note) }}
 
     <div class="text-right">
-        <button type="submit" class="btn btn-primary">
-            add
+        <button type="submit" class="btn btn-info">
+            Add Venue
         </button>
     </div>
     {{  form_end(form) }}

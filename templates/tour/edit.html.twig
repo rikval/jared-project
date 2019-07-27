@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - edit: {{ tour.name }}{% endblock %}
+{% block title %}{{ parent() }} {{ tour.name }}{% endblock %}
 
 {% block body %}
-    <h1>edit a tour</h1>
+    <h2 class="text-warning">Edit {{ tour.name }}</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
@@ -12,8 +12,8 @@
     {{ form_row(form.endDate) }}
 
     <div class="text-right">
-        <button type="submit" class="btn btn-primary">
-            edit
+        <button type="submit" class="btn btn-warning">
+            Edit Tour
         </button>
     </div>
     {{  form_end(form) }}

@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Add tour{% endblock %}
 
 {% block body %}
-    <h1>Add a tour</h1>
+    <h2 class="text-warning">Add a tour</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
@@ -12,8 +12,8 @@
     {{ form_row(form.endDate) }}
 
     <div class="text-right">
-        <button type="submit" class="btn btn-primary">
-            add
+        <button type="submit" class="btn btn-warning">
+            Add Tour
         </button>
     </div>
     {{  form_end(form) }}

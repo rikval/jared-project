@@ -21,7 +21,7 @@
         <div class="sidebar" data-color="purple" data-background-color="black" data-image="../dist/img/side_bar_tour_2.jpg">
 
             <div class="logo">
-                <a href="{{ path('home_index') }}" class="simple-text logo-normal">
+                <a href="{{ path('home_index') }}" class="simple-text logo-normal text-rose">
                     Jared Project
                 </a>
             </div>
@@ -85,7 +85,7 @@
                             #}
                             {% if app.user is not null %}
                             <li>
-                                Hello <span class="text-primary user-is-log">{{ app.user.nickname }}</span> !
+                                Hello <span class="text-rose user-is-log">{{ app.user.nickname }}</span> !
                             </li>
                             {% endif %}
                             <li class="nav-item dropdown">
@@ -180,7 +180,7 @@
                             },
                         ],
                         header: {
-                            left: 'prevYear prev,next nextYear today',
+                            left: 'prevYear,prev next,nextYear today',
                             center: 'title',
                             right: 'dayGridMonth,timeGridWeek,timeGridDay',
                         },

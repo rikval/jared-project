@@ -4,17 +4,17 @@
 
 {% block body %}
 
-    <h1>{{ contact.name }}</h1>
-    <p class="text-primary" >{{ contact.email }}</p>
-    <p class="text-primary" >{{ contact.phone }}</p>
-    <p class="text-primary" >{{ contact.website }}</p>
-    <p class="text-primary" >{{ contact.language }}</p>
-    <p class="text-primary" >{{ contact.location.city }}</p>
-    <p class="text-primary" >{{ contact.location.country }}</p>
-    <p class="text-primary" >{{ contact.note }}</p>
+    <h1 class="text-rose">{{ contact.name }}</h1>
+    <p class="text-gray">{{ contact.email }}</p>
+    <p class="text-gray" >{{ contact.phone }}</p>
+    <p class="text-gray" >{{ contact.website }}</p>
+    <p class="text-gray" >{{ contact.language }}</p>
+    <p class="text-gray" >{{ contact.location.city }}</p>
+    <p class="text-gray" >{{ contact.location.country }}</p>
+    <p class="text-gray" >{{ contact.note }}</p>
 
     <a href="{{ path('contact_edit', {'id': contact.id}) }}"
-       class="btn btn-primary">
+       class="btn btn-white">
         Edit Contact
     </a>
     <a href="{{ path('contact_delete', {'id': contact.id}) }}"

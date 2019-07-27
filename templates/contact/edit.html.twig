@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ contact.name }} {% endblock %}
 
 {% block body %}
-    <h1>Edit {{ contact.name }}</h1>
+    <h2 class="text-rose">Edit : {{ contact.name }}</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
@@ -11,16 +11,13 @@
     {{ form_row(form.phone) }}
     {{ form_row(form.website) }}
     {{ form_row(form.language) }}
-
-    <h2>Contact's location</h2>
-    {{ form_row(form.location) }}
-
-    <h2>Add some notes</h2>
     {{ form_row(form.note) }}
 
+    <h4 class="text-rose">Address</h4>
+    {{ form_row(form.location) }}
 
     <div class="text-right">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-white">
             Edit Contact
         </button>
     </div>

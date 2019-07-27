@@ -25,6 +25,8 @@
                                 <th class="text-danger">Title</th>
                                 <th class="text-danger">Venue</th>
                                 <th class="text-danger">Allowance</th>
+                                <th class="text-danger">Accommodation</th>
+                                <th class="text-danger">Public</th>
                                 <th class="text-danger">Options </th>
                             </tr>
                             </thead>
@@ -34,6 +36,16 @@
                                     <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.title }}</a></td>
                                     <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
                                     <td>{{ event.allowance }} {{ event.currency }}</td>
+                                    <td>
+                                        {% if event.hasAccommodation == 1 %}
+                                            <i class="material-icons text-danger">done</i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if event.isPublic == 1 %}
+                                            <i class="material-icons text-danger">done</i>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a class="btn btn-white btn-link btn-sm" href="{{ path('event_edit', {"id" : event.id}) }}">
                                             <i class="material-icons text-danger">edit</i>

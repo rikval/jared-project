@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ artist.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit {{ artist.name }}</h1>
+    <h2 class="text-success">Edit : {{ artist.name }}</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}

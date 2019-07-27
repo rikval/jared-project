@@ -5,7 +5,7 @@
 {% block body %}
     <div class="row">
         <a href="{{ path('contact_new') }}"
-           class="btn btn-primary">
+           class="btn btn-white">
             New Contact
         </a>
     </div>
@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-rose">
                     <h4 class="card-title ">Your Contacts</h4>
                 </div>
                 <div class="card-body">
@@ -21,14 +21,14 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="text-primary">Name</th>
-                                <th class="text-primary">Email</th>
-                                <th class="text-primary">Phone</th>
-                                <th class="text-primary">Website</th>
-                                <th class="text-primary">Language</th>
-                                <th class="text-primary">Location</th>
+                                <th class="text-rose">Name</th>
+                                <th class="text-rose">Email</th>
+                                <th class="text-rose">Phone</th>
+                                <th class="text-rose">Website</th>
+                                <th class="text-rose">Language</th>
+                                <th class="text-rose">Location</th>
                                 {#<th class="text-primary">Note</th>#}
-                                <th class="text-primary">Options</th>
+                                <th class="text-rose">Options</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -43,10 +43,10 @@
                                     {#<td>{{ contact.note }}</td>#}
                                     <td>
                                         <a class="btn btn-white btn-link btn-sm" href="{{ path('contact_edit', {"id" : contact.id}) }}">
-                                            <i class="material-icons text-primary">edit</i>
+                                            <i class="material-icons text-rose">edit</i>
                                         </a>
                                         <a class="btn btn-white btn-link btn-sm" href="{{ path('contact_delete', {"id" : contact.id}) }}">
-                                            <i class="material-icons text-primary">close</i>
+                                            <i class="material-icons text-rose">close</i>
                                         </a>
                                     </td>
                                 </tr>

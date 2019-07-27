@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Add event{% endblock %}
+{% block title %}{{ parent() }} - Add an event{% endblock %}
 
 {% block body %}
-    <h1>add a date</h1>
+    <h2 class="text-danger">Add an event</h2>
 
     {{ form_start(form) }}
     {{ form_row(form.title) }}
@@ -14,8 +14,8 @@
     {{ form_row(form.allowance) }}
 
     <div class="text-right">
-        <button type="submit" class="btn btn-primary">
-            Save
+        <button type="submit" class="btn btn-danger">
+            Add Event
         </button>
     </div>
     {{  form_end(form) }}

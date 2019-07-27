@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Event{% endblock %}
+{% block title %}{{ parent() }} - {{ event.title }}{% endblock %}
 
 {% block body %}
 
-    <h1>Date{{ event.id }}</h1>
+    <h1 class="text-danger">{{ event.title }}</h1>
+    <p class="text-gray">Venue :
+        <a href="{{ path('venue_show', {"id": event.venue.id}) }}">
+            {{ event.venue.name }}
+        </a>
+    </p>
+    <p class="text-gray">Allowance : {{ event.allowance }} {{ event.currency }}</p>
+    <p class="text-gray">Accommodation :
+        {% if event.hasAccommodation == 1 %}
+            <i class="material-icons text-danger">done</i>
+        {% else %}
+            <i class="material-icons text-danger">close</i>
+        {% endif %}
+    </p>
+    <p class="text-gray">Public :
+        {% if event.isPublic == 1 %}
+            <i class="material-icons text-danger">done</i>
+        {% else %}
+            <i class="material-icons text-danger">close</i>
+        {% endif %}
+    </p>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Venue</th>
-            <th>Allowance</th>
-            <th>Accommodation</th>
-            <th>Is public</th>
-            <th colspan="2">Options</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><a href="{{ path('event_show', {"id" : event.id}) }}">{{ event.title }}</a></td>
-                <td><a href="{{ path('venue_show', {"id": event.venue.id}) }}">{{ event.venue.name }}<a/></td>
-                <td>{{ event.allowance }} {{ event.currency }}</td>
-                <td>{{ event.hasAccommodation }}</td>
-                <td>{{ event.isPublic }}</td>
-                <td><a class="btn-info" href="{{ path('event_edit', {"id" : event.id}) }}">Edit</a></td>
-                <td><a class="btn-danger" href="{{ path('event_delete', {"id" : event.id}) }}">Delete</a></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('event_delete', {'id': event.id}) }}"
+    <a href="{{ path('event_edit', {'id': event.id}) }}"
        class="btn btn-danger">
-        Supprimer
+        Edit
+    </a>
+    <a href="{{ path('event_delete', {'id': event.id}) }}"
+       class="btn btn-secondary">
+        Delete
     </a>
 
 {% endblock %}

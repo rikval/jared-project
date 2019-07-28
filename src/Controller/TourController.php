@@ -125,9 +125,13 @@ class TourController extends AbstractController
                     }
                     $this->addFlash('error', 'The form contains errors');
                 }
-                return $this->redirectToRoute("home_index");
+                return $this->render('tour/edit.html.twig', [
+                    'tour' => $tour,
+                    'form' => $form->createView(),
+                ]);
             }
         }
+        return $this->redirectToRoute("home_index");
     }
 
     /**

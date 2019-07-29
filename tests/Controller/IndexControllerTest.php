@@ -15,7 +15,6 @@ class IndexControllerTest extends WebTestCase
     /** @test */
     public function homePageIsLoad ()
     {
-
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
         $this->assertSame('200', $client->getResponse()->getStatusCode());
@@ -75,7 +74,7 @@ class IndexControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/artist/new');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('add')->form();
+        $form = $crawler->selectButton('Add Artist')->form();
         $artist = "artist" . rand(1, 20);
         $form['artist[name]'] = $artist;
         $client->submit($form);
@@ -104,9 +103,9 @@ class IndexControllerTest extends WebTestCase
         $endDateForm = new \DateTime('2007-08-29 22:30:48');
         $newEndDate = $endDateForm->format('Y-m-d');
 
-        $form = $crawler->selectButton('add')->form();
+        $form = $crawler->selectButton('Add Tour')->form();
         $form['tour[name]'] = "Tour test";
-        $form['tour[artist]'] = 27;
+        $form['tour[artist]'] = 31;
         $form['tour[startDate]'] = $newStartDate;
         $form['tour[endDate]'] = $newEndDate;
         $client->submit($form);

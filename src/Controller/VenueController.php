@@ -104,10 +104,6 @@ class VenueController extends AbstractController
                     ]);
                 }
                 $this->addFlash('error', 'The form contains errors');
-                return $this->render('venue/edit.html.twig', [
-                    'venue' => $venue,
-                    'form' => $form->createView(),
-                ]);
             }
             return $this->render('venue/edit.html.twig', [
                 'venue' => $venue,

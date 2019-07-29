@@ -26,13 +26,19 @@
         {% endif %}
     </p>
 
-    <a href="{{ path('event_edit', {'id': event.id}) }}"
-       class="btn btn-danger">
-        Edit
-    </a>
-    <a href="{{ path('event_delete', {'id': event.id}) }}"
-       class="btn btn-secondary">
-        Delete
-    </a>
+
+        {% for user in event.users %}
+            {% if user is same as(app.user) %}
+                <a href="{{ path('event_edit', {'id': event.id}) }}"
+                   class="btn btn-danger">
+                    Edit
+                </a>
+                <a href="{{ path('event_delete', {'id': event.id}) }}"
+                   class="btn btn-secondary">
+                    Delete
+                </a>
+            {% endif %}
+        {% endfor %}
+
 
 {% endblock %}
